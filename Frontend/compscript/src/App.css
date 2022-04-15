@@ -9,20 +9,27 @@
 .editores{
   display:flex;
   flex-direction: 'row';
+  
 }
 
 .texteditor {
   border : 10px solid;
   border-color: #1e1f1f;
   border-radius: 15px;
+  
 }
 .consola{
   width: 600px;
-  height: 379px;
+  height: 375px;
   border : 10px solid;
   border-color: #1e1f1f;
   border-radius: 15px;
   text-align:left;
+  background-color: #1e1f1f;
+  color: white;
+  font-family: "Lucida Console";
+  font-size: 15px;
+  resize: none;
 }
 .espacio {
   width: 20px;

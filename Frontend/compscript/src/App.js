@@ -4,10 +4,10 @@ import SaveAltRoundedIcon from "@material-ui/icons/SaveAltRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import OpenInBrowserRoundedIcon from "@material-ui/icons/OpenInBrowserRounded";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Editor from "@monaco-editor/react";
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
+import {saveAs} from "file-saver"
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -17,41 +17,82 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const [valueEditor,setValueEditor] = useState("");
+  const [valor,setValorconsola] = useState("");
   const editorRef = useRef(null);
 
-  function handleEditorDidMount(editor, monaco) {
+ const createFile = () =>{
+   const blob = new Blob([editorRef.current.getValue()], {type: "text/plain; charset=utf-8"});
+   saveAs(blob,"file.cst")
+ }
+ 
+ const readFile = (e) =>{
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsText(file);
+
+    fileReader.onload = () =>{
+      console.log(fileReader.result);
+      setValueEditor(fileReader.result);
+    }
+
+    fileReader.onerror = ()=>{
+      console.log(fileReader.error);
+    }
+ }
+
+  const newFile = () =>{
+    setValueEditor("");
+  }
+  const printconsola = (imprimir_) =>{
+      setValorconsola(imprimir_);
+  }
+ 
+
+  const handleEditorDidMount = (editor, monaco) =>{
     editorRef.current = editor;
   }
 
-  function showValue() {
-    console.log(editorRef.current.getValue());
+  const showValue = ()=> {
+    printconsola(editorRef.current.getValue());
   }
   return (
     <header className="App-header">
       <div>
+      
         <Button
           variant="contained"
-          color="Secondary"
+          color="secondary"
           className={classes.button}
           startIcon={<AddCircleOutlineRoundedIcon />}
+          onClick={newFile}
         >
           Nuevo
         </Button>
-
-        <Button
-          variant="contained"
-          color="Secondary"
-          className={classes.button}
-          startIcon={<OpenInBrowserRoundedIcon />}
+        <input
+        accept=".cst"             
+        style={{display: "none"}}
+        id="contained-button-file"
+        multiple
+        type="file"
+        onChange={readFile}
+      />
+      <label htmlFor="contained-button-file">
+        <Button variant="contained" color="secondary" component="span"
+        startIcon={<OpenInBrowserRoundedIcon />}
         >
           Abrir
         </Button>
+      </label>
+
+        
 
         <Button
           variant="contained"
-          color="Secondary"
+          color="secondary"
           className={classes.button}
           startIcon={<SaveAltRoundedIcon />}
+          onClick = {createFile}
         >
           Guardar
         </Button>
@@ -65,28 +106,27 @@ function App() {
             height="400px"
             theme="vs-dark"
             defaultLanguage="typescript"
-            value="//Waler Gustavo Cotí Xalin - 201700522"
+            value = {valueEditor}
             onMount={handleEditorDidMount}
           />
         </div>
         <div className="espacio"></div>
         <div style={{ width: "50%" }}>
-          <input className="consola" 
-          type="textare" 
+          <textarea className="consola" type="textare" 
           name="textValue"
-          value="hola mundo"
-           />
-        
+          readOnly="readOnly"
+          value = {valor}
+          wrap="hard"></textarea>
         </div>
       </div>
+      <div className="espacio"></div>
       <Button
         variant="contained"
         color="primary"
         className={classes.button}
         startIcon={<PlayArrowIcon />}
-      >
-        Ejecutar
-      </Button>
+        onClick ={showValue}
+      >Ejecutar</Button>
     </header>
   );
 }
