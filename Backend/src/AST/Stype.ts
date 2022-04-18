@@ -41,4 +41,5 @@ export enum tipos
     BOOLEANO = "BOOLEANO",
     CADENA = "CADENA",
     ERROR = "ERROR"
+    
 }

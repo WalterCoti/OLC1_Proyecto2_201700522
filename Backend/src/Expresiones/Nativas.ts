@@ -28,14 +28,14 @@ export default class NATIVA extends Expresion {
                 case "LENGTH":
                     if (!(valor.valor instanceof Array) && typeof(valor.valor)!== typeof("")) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es una lista o vector o string",this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es vector o string",this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     }
                     return new Literal(this.linea, this.columna, valor.valor.length, tipos.ENTERO);
                 case "ROUND":
                     if (typeof(valor.valor) !== typeof(1)) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es un int o un double",this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado debe ser de tipo int o  double",this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     }
                     return new Literal(this.linea, this.columna, Math.round(valor.valor), tipos.ENTERO);

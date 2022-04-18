@@ -28,10 +28,10 @@ export default class FUNCIONF extends Instruccion {
     ejecutar(arbol: ArbolAST, tabla: Entorno) {
         
         let up = this.nombre.toUpperCase();
-        if (up==="LENGTH" || up==="TRUNCATE" || up==="ROUND" 
+        if (up==="LENGTH" || up==="ROUND" 
             || up==="TYPEOF" || up==="TOSTRING" || up==="TOCHARARRAY") {
             arbol.num_error++;
-            arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Existe una función nativa con este nombre", this.linea, this.columna));
+            arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Existe una función con este nombre", this.linea, this.columna));
             return;
         }
         let nuevo_nombre = this.nombre+"#";
@@ -101,7 +101,7 @@ export default class FUNCIONF extends Instruccion {
             return;
         }
         arbol.num_error++;
-        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Ya existe una función con el nombre indicado", this.linea, this.columna));
+        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Ya existe una función con este nombre", this.linea, this.columna));
         return;
         // ERROR
     }

@@ -1,8 +1,3 @@
-%{
-//codigo js
-
-%}
-
 //definicion lexica
 %lex 
 %options case-insensitive 
@@ -14,7 +9,9 @@
 
 // COMENTARIOS 
 "//".*                          {/* comentarios simples */}
-"/*"((\*+[^/*])|([^*]))*\**"*/" {/* comentarios con multiples lineas*/} 
+[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]  {/* comentarios con multiples lineas*/} 
+
+"//".*            	{}
 
 // ESACIOS EN BLANCO Y SALTO DE LINEA
 [ \s\r\n\t]                     {/*Espacios se ignoran */ }
@@ -110,7 +107,9 @@
 \"[^\"]*\"                      { yytext=yytext.substr(1,yyleng-2); return 'CADENA'; }
 [0-9]+\b                        {console.log("LEX:  "+yytext);return 'ENTERO';}
 <<EOF>>                         return 'EOF';
-.                               {console.log("ERROR LEXICO:  "+yytext); return 'ERRORLEX'}
+.                               {ArbolAST.num_error++;
+                                ArbolAST.errores.push(new Excepcion.default(ArbolAST.num_error, "LEXICO", "Símbolo "+yytext+" no reconocido.", yylloc.first_line, yylloc.first_column)); 
+                                }
 
 
 
@@ -118,6 +117,52 @@
 
 
 /lex
+
+/* IMPORTS */
+
+%{
+    const Aritmetica = require('./Expresiones/Aritmeticas');
+    const Casteo = require('./Expresiones/Casteos');
+    const Condicion = require('./Expresiones/condiciones');
+    const Decremento = require('./Expresiones/Decremento');
+    const Expresion = require('./Expresiones/Expresion');
+    const FUNCION = require('./Expresiones/Funciones')
+    const Incremento = require('./Expresiones/Incrementos');
+    const Literal = require('./Expresiones/Literal');
+    const NATIVAS = require('./Expresiones/Nativas');
+    const TERNARIO = require('./Expresiones/Ternarios');
+    const TOLOWER = require('./Expresiones/toLower');
+    const TOUPPER = require('./Expresiones/toUpper');
+    const Variable = require('./Expresiones/Variables');
+    const Vector = require('./Expresiones/vector');
+    
+    const ASIGNAR = require('./Instrucciones/ASIGNAR')
+    const BREAK = require('./Instrucciones/Break');
+    const CONTINUE = require('./Instrucciones/Continue');
+    const DECLARAR = require('./Instrucciones/DECLARAR');
+    const DEC = require('./Instrucciones/Decremento');
+    const INC = require('./Instrucciones/incrementar');
+    const IF = require('./Instrucciones/IF');
+    const FOR = require('./Instrucciones/For');
+    const DOWHILE = require('./Instrucciones/dowhile');
+    const FUNC = require('./Instrucciones/Funcion');
+    const LLAMADA = require('./Instrucciones/Llamada');
+    const Print = require('./Instrucciones/Print');
+    const Println = require('./Instrucciones/Println');
+    const RETURN = require('./Instrucciones/Return');
+    const SWITCH = require('./Instrucciones/Switch');
+    const WHILE = require('./Instrucciones/while');
+    const Excepcion = require('./Exceptions/Excepcion');
+    const Instruccion = require('./Abstracto/instrucciones');
+    const Arbol = require('./AST/ASTTree');
+    const Tipo = require('./AST/Stype');
+    let Texto="";
+    let ArbolAST = new Arbol.default([]);
+    let ArbolAST2 = new Arbol.default([]);
+%}
+
+
+
 //Precedencia
 %left 'TERNARIO_'
 %left 'OR_'
@@ -138,39 +183,39 @@
 //Definicion de gramatica
 %%
 
-INI : LINS EOF      
-    | error EOF     
-    | error         
+INI : LINS EOF      {ArbolAST.instrucciones = $1; ArbolAST2 = ArbolAST; ArbolAST = new Arbol.default([]); return ArbolAST2;}
+    | error EOF     {ArbolAST.num_error++;ArbolAST.errores.push(new Excepcion.default(ArbolAST.num_error, "Sintactico", "No se esperaba  "+yytext+".", this._$.first_line, this._$.first_column));}
+    | error         {}        
 ;
 
-LINS: LINS INS       
-    | INS            
+LINS:LINS INS       {$1.push($2); $$=$1;}
+    |INS            {$$= []; $$.push($1);}            
 ;
 
-INS : PRINT_ PARL_ EXP PARR_ PYC_   
-	| PRINTLN_ PARL_ EXP PARR_ PYC_	
-    | DECLARACION PYC_                            
-    | ASIGNACION PYC_                             
-    | FIF_                                           
-    | FWHILE_                                        
-    | FFOR_                                            
-    | FSWITCH_                                       
-    | INCREMENTO PYC_                             
-    | DECREMENTO PYC_                             
-    | DO_WHILE_                                       
-    | FUNCION                                       
-    | LLAMADA PYC_                                
-    | FRETURN                                       
-    | BREAK_ PYC_                                  
-    | CONTINUE_ PYC_                               
-    | FTERNARIO_ PYC_                              
-    | ID DOT_ ADD PARL_ EXP PARR_ PYC_             
-    | error PYC_                                  
-    | error LLAVER_ 
+INS : PRINT_ PARL_ EXP PARR_ PYC_           {$$ = new Print.default(this._$.first_line, this._$.first_column, $3); }
+	| PRINTLN_ PARL_ EXP PARR_ PYC_	        {$$ = new Println.default(this._$.first_line, this._$.first_column, $3); }
+    | DECLARACION PYC_                      {$$ = $1}      
+    | ASIGNACION PYC_                       {$$ = $1}     
+    | FIF_                                  {$$ = $1}         
+    | FWHILE_                               {$$ = $1}         
+    | FFOR_                                 {$$ = $1}           
+    | FSWITCH_                              {$$ = $1}         
+    | INCREMENTO PYC_                       {$$ = new INC.default(this._$.first_line, this._$.first_column, $1);}      
+    | DECREMENTO PYC_                       {$$ = new DEC.default(this._$.first_line, this._$.first_column, $1);}      
+    | DO_WHILE_                             {$$ = $1}          
+    | FUNCION                               {$$ = $1}        
+    | LLAMADA PYC_                          {if($1){$$ = new LLAMADA.default(this._$.first_line, this._$.first_column, $1);}else{$$="";}}    
+    | FRETURN                               {$$ = $1}
+    | BREAK_ PYC_                           {$$ = new BREAK.default(this._$.first_line, this._$.first_column);}        
+    | CONTINUE_ PYC_                        {$$ = new CONTINUE.default(this._$.first_line, this._$.first_column);}       
+    | FTERNARIO_ PYC_                       {$$ = $1}      
+    | ID DOT_ ADD PARL_ EXP PARR_ PYC_      {$$ = new ADD.default(this._$.first_line, this._$.first_column, $1, $5);}       
+    | error PYC_                            {ArbolAST.num_error++;ArbolAST.errores.push(new Excepcion.default(ArbolAST.num_error, "Sintactico", "No se esperaba el lexema "+yytext+".", this._$.first_line, this._$.first_column));}      
+    | error LLAVER_                         {ArbolAST.num_error++;ArbolAST.errores.push(new Excepcion.default(ArbolAST.num_error, "Sintactico", "No se esperaba el lexema "+yytext+".", this._$.first_line, this._$.first_column));}
 ;
 
-FRETURN : RETURN_ PYC_                  
-        | RETURN_ EXP PYC_              
+FRETURN : RETURN_ PYC_                      {$$ = new RETURN.default(this._$.first_line, this._$.first_column);}     
+        | RETURN_ EXP PYC_                  {$$ = new RETURN.default(this._$.first_line, this._$.first_column, $2);}
 ;
 
 DECLARACION : FTIPO ID                                                          
@@ -185,11 +230,11 @@ ASIGNACION  :ID IGUAL_ EXP
             |ID CORL_ EXP CORR_ IGUAL_ EXP                 
         ;
 
-FUNCION :FTIPO ID PARL_ PARR_ LLAVEL_ LINS LLAVER_                
-        |FTIPO ID PARL_ PARR_ LLAVEL_ LLAVER_                     
-        |FTIPO ID PARL_ PARAMETROS PARR_ LLAVEL_ LINS LLAVER_     
-        |FTIPO ID PARL_ PARAMETROS PARR_ LLAVEL_ LLAVER_          
-        |VOID_ ID PARL_ PARAMETROS PARR_ LLAVEL_ LINS LLAVER_      
+FUNCION :ID PARL_ PARR_ DDOT_ FTIPO LLAVEL_ LINS LLAVER_                
+        |ID PARL_ PARR_ DDOT_ FTIPO LLAVEL_ LLAVER_                     
+        |ID PARL_ PARAMETROS PARR_ DDOT_ FTIPO LLAVEL_ LINS LLAVER_     
+        |ID PARL_ PARAMETROS PARR_ DDOT_ FTIPO LLAVEL_ LLAVER_          
+        |ID PARL_ PARAMETROS PARR_ DDOT_ FTIPO LLAVEL_ LINS LLAVER_      
         |VOID_ ID PARL_ PARR_ LLAVEL_ LINS LLAVER_                 
         |VOID_ ID PARL_ PARAMETROS PARR_ LLAVEL_ LLAVER_           
         |VOID_ ID PARL_ PARR_ LLAVEL_ LLAVER_                      

@@ -41,15 +41,11 @@ export default class ASIGNAR extends Instruccion {
                 arbol.num_error++;
                 arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de vector erronea",this.linea, this.columna));
                 return false;
-            }else if(this.tip==="LIST" && expre.CANTIDAD===-1){
-                arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de lista erronea",this.linea, this.columna));
-                return false;
             }
             
-                if (expre.tipo.tipos!==value?.Tipo.tipos && expre.tipo.tipos!==tipos.ENTERO
-                    && expre.tipo.tipos!==tipos.DOBLE && value?.Tipo.tipos!== tipos.ENTERO
-                    && value?.Tipo.tipos!==tipos.DOBLE) {
+            if (expre.tipo.tipos!==value?.Tipo.tipos && expre.tipo.tipos!==tipos.ENTERO
+                && expre.tipo.tipos!==tipos.DOBLE && value?.Tipo.tipos!== tipos.ENTERO
+                && value?.Tipo.tipos!==tipos.DOBLE) {
                 arbol.errores.push(new Excepcion(arbol.num_error,"Semantico","el tipado de la variable no coincide con el del valor indicado", this.linea, this.columna));
                 return false;
             }

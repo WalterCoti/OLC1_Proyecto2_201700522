@@ -6,7 +6,7 @@ import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
 
-export default class Print extends Instruccion {
+export default class Println extends Instruccion {
     public exp: Expresion | any;
     constructor(linea:number, columna:number, exp?:Expresion){
         super(linea, columna);
@@ -20,7 +20,7 @@ export default class Print extends Instruccion {
                 if (result.Tipo.tipos!=tipos.ERROR) {
                     if (result.valor instanceof Array) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede imprimir una lista o vector",this.linea, this.columna));   
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede imprimir un vector",this.linea, this.columna));   
                         return;
                     }
                     this.ast = true;
@@ -36,7 +36,7 @@ export default class Print extends Instruccion {
 
     getNodo():nodoAST{
         let nodo:nodoAST = new nodoAST("PRINT");
-        nodo.agregarHijo("print");
+        nodo.agregarHijo("println");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined,undefined,this.exp.getNodo());
         nodo.agregarHijo(")");
