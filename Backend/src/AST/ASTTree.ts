@@ -2,7 +2,7 @@ import Entorno from "./Environment";
 import Excepcion from "../exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
 import ListaSimbolo from "./Lsimbolos";
-import { Expresion } from "../expresiones/expresion";
+import { Expresion } from "./expresiones/expresion";
 import { nodoAST } from "../Abstracto/nodeAST";
 
 
@@ -65,21 +65,21 @@ export default class ArbolAST {
 
     public graphAST():void
     {
-        let r:string = "AST";
+        let name:string = "AST";
         let ext:string = "svg";
         var fs = require('fs');
-        var stream = fs.createWriteStream(`./src/reportes/${r}.dot`);
+        var stream = fs.createWriteStream(`./src/reportes/${name}.dot`);
         stream.once('open',() =>{
             stream.write(this.getDot(this.raiz));
             stream.end();
 
         });
         const exec = require('child_process').exec;
-        exec(`dot -T svg -o ./src/reportes/${r}.${ext} ./src/reportes/${r}.dot`, (err:any, stdout:any)=>{
+        exec(`dot -T svg -o ./src/reportes/${name}.${ext} ./src/reportes/${name}.dot`, (err:any, stdout:any)=>{
             if (err) {
                 throw err;
             }
-            exec(`start ./src/reportes/${r}.${ext}`);
+            exec(`start ./src/reportes/${name}.${ext}`);
         });
     }
     
