@@ -1,7 +1,7 @@
 import { Instruccion } from "../Abstracto/instrucciones";
 import { nodoAST } from "../Abstracto/NodeAST";
 import Excepcion from "../exceptions/Excepcion";
-import DECLARAR from "../instrucciones/Declararar";
+import DECLARAR from "../Instrucciones/Declararar";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import ListaSimbolo from "../AST/Lsimbolos";

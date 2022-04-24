@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/nodeAST";
+import { nodoAST } from "../Abstracto/NodeAST";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";

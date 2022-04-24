@@ -1,10 +1,10 @@
-import { nodoAST } from "../Abstracto/nodeAST";
+import { nodoAST } from "../Abstracto/NodeAST";
 import Excepcion from "../exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
-import { Expresion } from "./expresion";
-import Literal from "./literal";
+import { Expresion } from "./Expresion";
+import Literal from "./Literal";
 
 export default class Aritmetica extends Expresion {
     public ExpresionIzquierda:Expresion|undefined;

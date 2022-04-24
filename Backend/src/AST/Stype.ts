@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/nodeAST";
+import { nodoAST } from "../Abstracto/NodeAST";
 
 export default class Tipo
 {

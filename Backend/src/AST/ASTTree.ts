@@ -2,7 +2,7 @@ import Entorno from "./Environment";
 import Excepcion from "../exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
 import ListaSimbolo from "./Lsimbolos";
-import { Expresion } from "./expresiones/expresion";
+import { Expresion } from "../Expresiones/Expresion";
 import { nodoAST } from "../Abstracto/nodeAST";
 
 

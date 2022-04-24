@@ -1,13 +1,13 @@
 import Excepcion from "../exceptions/Excepcion";
-import { Expresion } from "./expresion";
+import { Expresion } from "./Expresion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
-import Literal from "./literal";
+import Literal from "./Literal";
 import RETURN from "../Instrucciones/Return";
 import ListaSimbolo from "../AST/Lsimbolos";
 import FUNCIONF from "../Instrucciones/Funcion";
-import { nodoAST } from "../Abstracto/nodeAST";
+import { nodoAST } from "../Abstracto/NodeAST";
 
 export default class FUNCION extends Expresion {
 

@@ -1,8 +1,8 @@
-import { Instruccion } from "../Abstracto/Instrucciones";
-import { nodoAST } from "../Abstracto/nodeAST";
+import { Instruccion } from "../Abstracto/instrucciones";
+import { nodoAST } from "../Abstracto/NodeAST";
 import Excepcion from "../exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
-import Literal from "../expresiones/literal";
+import Literal from "../Expresiones/Literal";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
