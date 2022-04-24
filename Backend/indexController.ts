@@ -1,7 +1,7 @@
 import express , {query, Request, Response} from "express";
-import Excepcion from "./src/exceptions/Excepcion";
-import ArbolAST from './src/AST/ASTTree';
-import Entorno from './src/AST/Environment';
+import Excepcion from "./src/Analizador/Exceptions/Excepcion";
+import ArbolAST from './src/Analizador/AST/ASTTree';
+import Entorno from './src/Analizador/AST/Environment';
 
 class indexController {
 

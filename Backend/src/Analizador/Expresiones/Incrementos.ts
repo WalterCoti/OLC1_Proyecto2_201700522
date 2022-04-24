@@ -1,12 +1,12 @@
 import { nodoAST } from "../Abstracto/NodeAST";
-import Excepcion from "../exceptions/Excepcion";
+import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
 import { Expresion } from "./Expresion";
 import Literal from "./Literal";
 
-export default class DECREMENTO extends Expresion {
+export default class INCREMENTO extends Expresion {
 
     public exp:Expresion;
     constructor(linea: number, columna: number, exp:Expresion) {
@@ -26,7 +26,7 @@ export default class DECREMENTO extends Expresion {
                 if (expre.tipo.tipos !== tipos.ERROR && (expre.tipo.tipos===tipos.DOBLE || expre.tipo.tipos===tipos.ENTERO)){
                     if (this.exp.posicion===-1) {
                         let v = expre.getValor(arbol, tabla);
-                        var v2 = new Literal(this.linea, this.columna, v.valor-1, expre.valor.Tipo.tipos);
+                        var v2 = new Literal(this.linea, this.columna, v.valor+1, expre.valor.Tipo.tipos);
                         tabla.update(this.exp.nombre, v2);
                         return new Literal(this.linea, this.columna, expre.valor.valor, expre.tipo.tipos);
                     }else{
@@ -34,7 +34,7 @@ export default class DECREMENTO extends Expresion {
                         let v = new Literal(this.linea, this.columna, value, expre.tipo.tipos);
                         let dir = new Literal(this.linea, this.columna, this.exp.posicion.valor, this.exp.Tipo.tipos);
                         tabla.update(this.exp.nombre, v, dir);
-                        return new Literal(this.linea, this.columna, value-1, expre.tipo.tipos);
+                        return new Literal(this.linea, this.columna, value+1, expre.tipo.tipos);
                     }
                 }
             }else{
@@ -45,7 +45,7 @@ export default class DECREMENTO extends Expresion {
                 }else{
                     expre = this.exp.getValor(arbol, tabla)
                 }
-                return new Literal(this.linea, this.columna, expre.valor-1, expre.Tipo.tipos);
+                return new Literal(this.linea, this.columna, expre.valor+1, expre.Tipo.tipos);
             }
         }
         arbol.num_error++;
@@ -56,8 +56,7 @@ export default class DECREMENTO extends Expresion {
     getNodo():nodoAST{
         let nodo = new nodoAST("DECREMENTO");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());
-        nodo.agregarHijo("--");
+        nodo.agregarHijo("++");
         return nodo;
     }
-
 }

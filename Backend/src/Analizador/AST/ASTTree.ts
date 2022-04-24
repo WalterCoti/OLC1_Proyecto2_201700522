@@ -1,5 +1,5 @@
 import Entorno from "./Environment";
-import Excepcion from "../exceptions/Excepcion";
+import Excepcion from "../Exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
 import ListaSimbolo from "./Lsimbolos";
 import { Expresion } from "../Expresiones/Expresion";

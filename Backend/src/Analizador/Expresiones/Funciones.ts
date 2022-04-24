@@ -1,4 +1,4 @@
-import Excepcion from "../exceptions/Excepcion";
+import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "./Expresion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";

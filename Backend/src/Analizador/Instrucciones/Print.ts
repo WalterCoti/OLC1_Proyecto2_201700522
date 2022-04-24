@@ -1,6 +1,6 @@
 import { Instruccion } from "../Abstracto/instrucciones";
 import { nodoAST } from "../Abstracto/NodeAST";
-import Excepcion from '../Exceptions/Excepcion';
+import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -20,7 +20,7 @@ export default class Print extends Instruccion {
                 if (result.Tipo.tipos!=tipos.ERROR) {
                     if (result.valor instanceof Array) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede imprimir una lista o vector",this.linea, this.columna));   
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede imprimir un vector",this.linea, this.columna));   
                         return;
                     }
                     this.ast = true;

@@ -1,6 +1,6 @@
 import { Instruccion } from "../Abstracto/instrucciones";
 import { nodoAST } from "../Abstracto/NodeAST";
-import Excepcion from "../exceptions/Excepcion";
+import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import Literal from "../Expresiones/Literal";
 import ArbolAST from "../AST/ASTTree";
