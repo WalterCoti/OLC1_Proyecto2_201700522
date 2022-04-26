@@ -1,9 +1,10 @@
 import express , {query, Request, Response} from "express";
-import Excepcion from "./src/Analizador/Exceptions/Excepcion";
-import ArbolAST from './src/Analizador/AST/ASTTree';
-import Entorno from './src/Analizador/AST/Environment';
+import { Instruccion } from "./Abstracto/instrucciones";
+import Excepcion from "./Exceptions/Excepcion";
+import ArbolAST from './AST/ASTTree';
+import Entorno from './AST/Environment';
 
-class indexController {
+class Control {
 
     public  async index(req: Request, res: Response) {
         res.json();
@@ -13,25 +14,25 @@ class indexController {
 
         const Contenido = req.body.Contenido;
         try {
-            let parse = require('./analizador.js');
+            let parse = require("./Analizador/analizador");
             let ast = new ArbolAST([]);
             try{
                 ast = parse.parse(Contenido);
                 if (typeof(ast)==typeof(true)) {
                     ast = new ArbolAST([]);
                     ast.num_error++;
-                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error irrecuperable",-1,-1));
+                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error inrecuperable",-1,-1));
                 }
             }catch(e){
                 ast.num_error++;
-                ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error irrecuperable",-1,-1));
+                ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error inrecuperable",-1,-1));
             }
             if (typeof(ast)===typeof(new ArbolAST([]))) {
                 const tabla = new Entorno();
                 ast.global = tabla;
                 ast.EjecutarBloque();
                 if (ast.errores.length>0) {
-                    ast.consola+="\n---------------------Salida de Errores---------------------";
+                    ast.consola+="\n*******************Errores*********************";
                     for(let error of ast.errores){
                         ast.consola+="\n"+error.toString();
                     }
@@ -57,4 +58,4 @@ class indexController {
     }
 }
 
-export const IndexController = new indexController();
+export const control = new Control();

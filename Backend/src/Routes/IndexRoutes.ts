@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {IndexController} from "../controllers/indexController";
+import {control} from "../Analizador/controller";
 class IndexRoutes {
     public router: Router = Router();
 
@@ -8,8 +8,8 @@ class IndexRoutes {
     }
 
     public config(): void {
-        this.router.post("/Compilar", IndexController.interpretar);
-        this.router.post("/GRAFICAR", IndexController.open);
+        this.router.post("/Compilar", control.interpretar);
+        this.router.post("/Graficar", control.open);
     }
 }
 const indexRoutes = new IndexRoutes();
