@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import ArbolAST from "../AST/ASTTree";
@@ -64,8 +64,8 @@ export default class ASIGNAR extends Instruccion {
         //ERROR
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("ASIGNAR");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("ASIGNAR");
         if (this.UBICACION!==-1) {
             if (this.tip==="LIST") {
                 nodo.agregarHijo(this.ID);

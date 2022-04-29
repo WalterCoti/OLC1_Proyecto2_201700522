@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "./Expresion";
 import ArbolAST from "../AST/ASTTree";
@@ -47,10 +47,10 @@ export default class VECTOR extends Expresion {
         }
         
     }
-    getNodo():nodoAST{
-        let nodo = new nodoAST("");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("");
         if (this.tip==="LIST") {
-            nodo = new nodoAST("LISTA");
+            nodo = new NodeAST("LISTA");
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("[");
             nodo.agregarHijo("[");
@@ -59,7 +59,7 @@ export default class VECTOR extends Expresion {
             nodo.agregarHijo("]");
 
         }else{
-            nodo = new nodoAST("VECTOR");
+            nodo = new NodeAST("VECTOR");
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("[");
             nodo.agregarHijo(undefined, undefined, this.posicion.getNodo());

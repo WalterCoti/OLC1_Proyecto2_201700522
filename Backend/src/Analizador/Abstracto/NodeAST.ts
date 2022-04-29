@@ -1,19 +1,19 @@
-export class nodoAST {
+export class NodeAST {
 
-    public hijos: Array<nodoAST> = new Array<nodoAST>();
+    public hijos: Array<NodeAST> = new Array<NodeAST>();
     public valor:string;
 
     constructor(valor:string) {
         this.valor = valor;
     }
 
-    public setHijos(hijos:Array<nodoAST>){
+    public setHijos(hijos:Array<NodeAST>){
         this.hijos = hijos;
     }
 
-    public agregarHijo(cad?:string, hijos?:Array<nodoAST>, hijo?:nodoAST){
+    public agregarHijo(cad?:string, hijos?:Array<NodeAST>, hijo?:NodeAST){
         if (cad) {
-            this.hijos.push(new nodoAST(cad));
+            this.hijos.push(new NodeAST(cad));
         }
         else if (hijos) {
             for(let hijo of hijos)
@@ -24,10 +24,10 @@ export class nodoAST {
             this.hijos.push(hijo);
         }
     }
-    public agregarPrimerHijo(cad?:string, hijo?:nodoAST)
+    public agregarPrimerHijo(cad?:string, hijo?:NodeAST)
     {
         if (cad) {
-            this.hijos.unshift(new nodoAST(cad));
+            this.hijos.unshift(new NodeAST(cad));
         }else if (hijo) {
             this.hijos.unshift(hijo);
         }
@@ -43,7 +43,7 @@ export class nodoAST {
         this.valor = cad;
     }
     
-    public getHijos():Array<nodoAST> 
+    public getHijos():Array<NodeAST> 
     {
         return this.hijos;
     }

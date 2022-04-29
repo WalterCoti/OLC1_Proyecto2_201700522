@@ -3,7 +3,7 @@ import Excepcion from "../Exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
 import ListaSimbolo from "./Lsimbolos";
 import { Expresion } from "../Expresiones/Expresion";
-import { nodoAST } from "../Abstracto/nodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 
 
 export default class ArbolAST {
@@ -12,7 +12,7 @@ export default class ArbolAST {
     public errores: Array<Excepcion> = new Array<Excepcion>();
     public consola: String;
     public global: Entorno;
-    public raiz:nodoAST = new nodoAST("INSTRUCCIONES");
+    public raiz:NodeAST = new NodeAST("INSTRUCCIONES");
     public num_error:number = 0;
     public pilaCiclo:any[] = [];
     public pilaFuncion:any[] = [];
@@ -88,8 +88,8 @@ export default class ArbolAST {
         let r:string = "AST";
         let ext:string = "svg";
         try{
-            let init:nodoAST = new nodoAST("RAIZ");
-            let instr:nodoAST  = new nodoAST("INSTRUCCIONES");
+            let init:NodeAST = new NodeAST("RAIZ");
+            let instr:NodeAST  = new NodeAST("INSTRUCCIONES");
 
 
             for(let elemento of this.FUNCIONES){
@@ -98,7 +98,7 @@ export default class ArbolAST {
                 }
             }
             if (this.exec.length===1) {
-                let nodo = new nodoAST("EXEC");
+                let nodo = new NodeAST("EXEC");
                 nodo.agregarHijo("EXEC");
                 nodo.agregarHijo(undefined, this.exec[0].getNodo().getHijos(), undefined);
                 instr.agregarHijo(undefined, undefined, nodo);
@@ -115,10 +115,10 @@ export default class ArbolAST {
         }catch(e){console.log(e)}
     }
 
-    public getDot(raiz:nodoAST):string
+    public getDot(raiz:NodeAST):string
     {
         this.grafo = "";
-        this.grafo += "digraph {\n";//                         "     \"
+        this.grafo += "digraph {\n";
         var re = /\"/gi; 
         this.grafo += "n0[label=\"" + raiz.getValor().replace(re, "\\\"") + "\"];\n";
         this.c = 1;
@@ -127,7 +127,7 @@ export default class ArbolAST {
         return this.grafo;
     }
     
-    public recorrerAST(padre:string , nPadre:nodoAST)
+    public recorrerAST(padre:string , nPadre:NodeAST)
     {
         for(let hijo of nPadre.getHijos())
         {

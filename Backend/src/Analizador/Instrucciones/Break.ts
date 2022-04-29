@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -20,8 +20,8 @@ export default class BREAK extends Instruccion {
         //ERROR
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("BREAK");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("BREAK");
         nodo.agregarHijo("BREAK");
         nodo.agregarHijo(";")
         return nodo;

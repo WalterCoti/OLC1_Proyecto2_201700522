@@ -1,7 +1,7 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
-import DECLARAR from "./Declararar";
+import DECLARAR from "./Declarar";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import ListaSimbolo from "../AST/Lsimbolos";
@@ -105,10 +105,10 @@ export default class FUNCIONF extends Instruccion {
         return;
         // ERROR
     }
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("FUNCION");
-        let nodo2 = new nodoAST("PARAMETROS");
-        let nodo3 = new nodoAST("INSTRUCCIONES");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("FUNCION");
+        let nodo2 = new NodeAST("PARAMETROS");
+        let nodo3 = new NodeAST("INSTRUCCIONES");
         if (this.vector) {
             nodo.agregarHijo("VOID");
             nodo.agregarHijo(this.nombre);

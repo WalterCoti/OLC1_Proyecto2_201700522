@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -86,8 +86,8 @@ export default class CASTEO extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("CASTEO");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("CASTEO");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.Tipo.getNodo());
         nodo.agregarHijo(")");

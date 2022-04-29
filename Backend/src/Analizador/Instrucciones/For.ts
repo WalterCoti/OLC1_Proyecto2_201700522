@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import Literal from "../Expresiones/Literal";
@@ -112,8 +112,8 @@ export default class FOR extends Instruccion {
         //ERROR
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("FOR");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("FOR");
         nodo.agregarHijo("FOR");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined,undefined,this.declaracion.getNodo());
@@ -124,7 +124,7 @@ export default class FOR extends Instruccion {
         nodo.agregarHijo(")");
         nodo.agregarHijo("{");
         for(let element of this.bloque1){
-            let nodo2 = new nodoAST("INSTRUCCIONES");
+            let nodo2 = new NodeAST("INSTRUCCIONES");
             if(typeof(element) !== typeof("")){
                 nodo2.agregarHijo(undefined, undefined, element.getNodo());
             }

@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -850,8 +850,8 @@ export default class condicion extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("CONDICION");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("CONDICION");
         if (this.ExpresionDerecha && this.ExpresionIzquierda) {
             nodo.agregarHijo(undefined,undefined,this.ExpresionIzquierda.getNodo());
             nodo.agregarHijo(this.operador);

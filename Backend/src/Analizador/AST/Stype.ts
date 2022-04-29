@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 
 export default class Tipo
 {
@@ -26,8 +26,8 @@ export default class Tipo
         return "";
     }
 
-    public getNodo():nodoAST{
-        let nodo = new nodoAST("TIPO");
+    public getNodo():NodeAST{
+        let nodo = new NodeAST("TIPO");
         nodo.agregarHijo(this.tipos);
         return nodo;
     }

@@ -1,6 +1,6 @@
 import Arbol from "../AST/ASTTree";
 import TablaSimbolos from "../AST/Environment";
-import { nodoAST } from "./nodeAST";
+import { NodeAST } from "./NodeAST";
 
 export abstract class Instruccion {
 
@@ -13,6 +13,6 @@ export abstract class Instruccion {
     }
 
     abstract ejecutar(arbol: Arbol, tabla: TablaSimbolos):any;
-    public abstract getNodo():nodoAST;
+    public abstract getNodo():NodeAST;
 
 }

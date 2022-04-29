@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import { Expresion } from "./Expresion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -21,8 +21,8 @@ export default class VARIABLE extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
     
-    getNodo():nodoAST{
-        let nodo = new nodoAST("VARIABLE");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("VARIABLE");
         nodo.agregarHijo(this.nombre);
         return nodo;
     }

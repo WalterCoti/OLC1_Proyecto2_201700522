@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import ArbolAST from "../AST/ASTTree";
@@ -123,14 +123,14 @@ export default class SWITCH extends Instruccion {
         arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","error al leer la variable condicional", this.linea, this.columna));
         return;
     }
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("SWITCH");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("SWITCH");
         nodo.agregarHijo("SWITCH");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.Variable.getNodo());
         nodo.agregarHijo(")");
         nodo.agregarHijo("{");
-        let cas = new nodoAST("CASOS");
+        let cas = new NodeAST("CASOS");
         let raiz = cas;
         let x = 0;
         if (this.Case) {
@@ -140,7 +140,7 @@ export default class SWITCH extends Instruccion {
                     cas.agregarHijo(undefined, undefined, caso.Case.getNodo());
                     cas.agregarHijo(":")
                     if (caso.INS) {
-                        let inst = new nodoAST("INSTRUCCIONES");
+                        let inst = new NodeAST("INSTRUCCIONES");
                         for(let instruccion of caso.INS){
                             if (typeof(instruccion)!==typeof("")) {
                                 inst.agregarHijo(undefined, undefined, instruccion.getNodo());
@@ -150,7 +150,7 @@ export default class SWITCH extends Instruccion {
                     }
                     x++;
                     if (x!==this.Case.length) {
-                        let case2 = new nodoAST("CASOS");
+                        let case2 = new NodeAST("CASOS");
                         cas.agregarHijo(undefined, undefined, case2);
                         cas = case2;
                     }
@@ -158,14 +158,14 @@ export default class SWITCH extends Instruccion {
             }
         }
         if (this.Default) {
-            let def = new nodoAST("DEFAULT");
+            let def = new NodeAST("DEFAULT");
             for(let elemento of this.Default){
                 if(typeof(elemento) !== typeof("")){
                     def.agregarHijo(undefined, undefined, elemento.getNodo());
                 }
             }
             if (x==0) {
-                cas = new nodoAST("DEFAULT");
+                cas = new NodeAST("DEFAULT");
             }else{
                 cas.agregarHijo(undefined,undefined,def);
             }

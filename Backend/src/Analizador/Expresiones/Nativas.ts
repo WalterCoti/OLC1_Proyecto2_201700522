@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -117,8 +117,8 @@ export default class NATIVA extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("NATIVA");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("NATIVA");
         nodo.agregarHijo(this.nombre.toUpperCase());
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());

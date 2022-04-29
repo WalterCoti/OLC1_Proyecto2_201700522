@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import ArbolAST from "../AST/ASTTree";
@@ -26,8 +26,8 @@ export default class RETURN extends Instruccion {
         }
         return {nombre:"RETURN", retorno:undefined};
     }
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("RETURN");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("RETURN");
         nodo.agregarHijo("RETURN");
         if (this.exp) {
             nodo.agregarHijo(undefined, undefined, this.exp.getNodo());

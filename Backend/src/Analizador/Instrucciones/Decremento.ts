@@ -1,6 +1,6 @@
 import { Expresion } from "../Expresiones/Expresion";
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 
@@ -18,8 +18,8 @@ export default class DECREMENT extends Instruccion {
         //ERROR
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = this.exp.getNodo();
+    getNodo():NodeAST{
+        let nodo:NodeAST = this.exp.getNodo();
         nodo.agregarHijo(";");
         return nodo;
     }

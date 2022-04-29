@@ -1,6 +1,6 @@
 import { Expresion } from "../Expresiones/Expresion";
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -101,15 +101,15 @@ export default class IF extends Instruccion {
         return;
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("IF");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("IF");
         nodo.agregarHijo("IF");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.condicion1.getNodo());
         nodo.agregarHijo(")");
         nodo.agregarHijo("{");
         if (this.bloque1) {
-            let nodo1 = new nodoAST("INSTRUCCIONES");
+            let nodo1 = new NodeAST("INSTRUCCIONES");
             for(let element of this.bloque1){
                 if(typeof(element) !== typeof("")){
                     nodo1.agregarHijo(undefined, undefined, element.getNodo());
@@ -120,16 +120,16 @@ export default class IF extends Instruccion {
         }
         nodo.agregarHijo("}");
         if (this.elseIf) {
-            let nodoe = new nodoAST("ELSE IF")
+            let nodoe = new NodeAST("ELSE IF")
             nodoe.agregarHijo("ELSE");
             nodoe.agregarHijo(undefined, this.elseIf.getNodo().getHijos(), undefined);
             nodo.agregarHijo(undefined, undefined, nodoe);
         }
         if (this.bloque2) {
-            let nodo2:nodoAST = new nodoAST("ELSE");
+            let nodo2:NodeAST = new NodeAST("ELSE");
             nodo2.agregarHijo("ELSE")
             nodo2.agregarHijo("{")
-            let nodo1 = new nodoAST("INSTRUCCIONES");
+            let nodo1 = new NodeAST("INSTRUCCIONES");
             for(let element of this.bloque2){
                 if(typeof(element) !== typeof("")){
                     nodo1.agregarHijo(undefined, undefined, element.getNodo());

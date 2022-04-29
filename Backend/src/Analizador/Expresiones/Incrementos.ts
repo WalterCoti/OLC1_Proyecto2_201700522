@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -53,8 +53,8 @@ export default class INCREMENTO extends Expresion {
         return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("DECREMENTO");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("DECREMENTO");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());
         nodo.agregarHijo("++");
         return nodo;

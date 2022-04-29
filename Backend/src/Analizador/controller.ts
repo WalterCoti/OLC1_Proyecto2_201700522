@@ -1,5 +1,4 @@
-import express , {query, Request, Response} from "express";
-import { Instruccion } from "./Abstracto/instrucciones";
+import {Request, Response} from "express";
 import Excepcion from "./Exceptions/Excepcion";
 import ArbolAST from './AST/ASTTree';
 import Entorno from './AST/Environment';
@@ -11,13 +10,13 @@ class Control {
     }
 
     public interpretar(req: Request, res: Response) {
-
-        const Contenido = req.body.Contenido;
+        const compita = req.body.compilar;
+        console.log(compita);
         try {
-            let parse = require("./Analizador/analizador");
+            let parse = require("./analizador");
             let ast = new ArbolAST([]);
             try{
-                ast = parse.parse(Contenido);
+                ast = parse.parse(compita);
                 if (typeof(ast)==typeof(true)) {
                     ast = new ArbolAST([]);
                     ast.num_error++;

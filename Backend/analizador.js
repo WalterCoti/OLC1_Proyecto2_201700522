@@ -267,10 +267,10 @@ case 81:
 this.$ = new Tipo.default(Tipo.tipos.CADENA);
 break;
 case 82:
-this.$ = new Aritmetica.default(Aritmetica.OperadorAritmetico.SUMA,this._$.first_line, this._$.first_column, 0, Tipo.tipos.ENTERO, $$[$0-2], $$[$0])
+this.$ = new Aritmetica.default(Aritmetica.OperadorAritmetico.SUMA,this._$.first_line, this._$.first_column, 0 , Tipo.tipos.ENTERO, $$[$0-2], $$[$0])
 break;
 case 83:
-this.$ = new Aritmetica.default(Aritmetica.OperadorAritmetico.RESTA,this._$.first_line, this._$.first_column, 0, Tipo.tipos.ENTERO, $$[$0-2], $$[$0])
+this.$ = new Aritmetica.default(Aritmetica.OperadorAritmetico.RESTA,this._$.first_line, this._$.first_column, 0 , Tipo.tipos.ENTERO, $$[$0-2], $$[$0])
 break;
 case 84:
 this.$ = new Aritmetica.default(Aritmetica.OperadorAritmetico.MULTIPLICACION,this._$.first_line, this._$.first_column, 0, Tipo.tipos.ENTERO, $$[$0-2], $$[$0])
@@ -620,34 +620,34 @@ _handle_error:
     const Aritmetica = require('./Expresiones/Aritmeticas');
     const Casteo = require('./Expresiones/Casteos');
     const Condicion = require('./Expresiones/condiciones');
-    const Decremento = require('./Expresiones/Decremento');
+    const Decremento = require('./Expresiones/Decrementos');
     const Expresion = require('./Expresiones/Expresion');
     const FUNCION = require('./Expresiones/Funciones')
     const Incremento = require('./Expresiones/Incrementos');
     const Literal = require('./Expresiones/Literal');
     const NATIVAS = require('./Expresiones/Nativas');
     const TERNARIO = require('./Expresiones/Ternarios');
-    const TOLOWER = require('./Expresiones/toLower');
-    const TOUPPER = require('./Expresiones/toUpper');
+    const TOLOWER = require('./Expresiones/ToLower');
+    const TOUPPER = require('./Expresiones/ToUpper');
     const Variable = require('./Expresiones/Variables');
-    const Vector = require('./Expresiones/vector');
+    const Vector = require('./Expresiones/Vector');
     
-    const ASIGNAR = require('./Instrucciones/ASIGNAR')
+    const ASIGNAR = require('./Instrucciones/Asign')
     const BREAK = require('./Instrucciones/Break');
     const CONTINUE = require('./Instrucciones/Continue');
-    const DECLARAR = require('./Instrucciones/DECLARAR');
+    const DECLARAR = require('./Instrucciones/Declarar');
     const DEC = require('./Instrucciones/Decremento');
-    const INC = require('./Instrucciones/incrementar');
-    const IF = require('./Instrucciones/IF');
+    const INC = require('./Instrucciones/Incremento');
+    const IF = require('./Instrucciones/If');
     const FOR = require('./Instrucciones/For');
-    const DOWHILE = require('./Instrucciones/Dowhile');
+    const DOWHILE = require('./Instrucciones/DoWhile');
     const FUNC = require('./Instrucciones/Funcion');
     const LLAMADA = require('./Instrucciones/Llamada');
     const Print = require('./Instrucciones/Print');
     const Println = require('./Instrucciones/Println');
     const RETURN = require('./Instrucciones/Return');
     const SWITCH = require('./Instrucciones/Switch');
-    const WHILE = require('./Instrucciones/while');
+    const WHILE = require('./Instrucciones/While');
     const Excepcion = require('./Exceptions/Excepcion');
     const Instruccion = require('./Abstracto/instrucciones');
     const Arbol = require('./AST/ASTTree');

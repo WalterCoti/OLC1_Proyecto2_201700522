@@ -1,5 +1,5 @@
 import expres, {Application, Request, Response} from 'express';
-import IndexRoutes from './Routes/IndexRoutes';
+import IndexRoutes from './src/Routes/IndexRoutes';
 import morgan from 'morgan';
 import cors from 'cors';
 

@@ -7,7 +7,7 @@ import Literal from "./Literal";
 import RETURN from "../Instrucciones/Return";
 import ListaSimbolo from "../AST/Lsimbolos";
 import FUNCIONF from "../Instrucciones/Funcion";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 
 export default class FUNCION extends Expresion {
 
@@ -120,12 +120,12 @@ export default class FUNCION extends Expresion {
         }
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("LLAMADA");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("LLAMADA");
         nodo.agregarHijo(this.nombre);
         nodo.agregarHijo("(");
         if (this.parametros) {
-            let nodo2 = new nodoAST("PARAMETROS");
+            let nodo2 = new NodeAST("PARAMETROS");
             for(let element of this.parametros){
                 if (typeof(this.parametros)!==typeof("")) {
                     nodo2.agregarHijo(undefined, undefined, element.getNodo());

@@ -8,7 +8,7 @@ class IndexRoutes {
     }
 
     public config(): void {
-        this.router.post("/Compilar", control.interpretar);
+        this.router.post("/compile", control.interpretar);
         this.router.post("/Graficar", control.open);
     }
 }

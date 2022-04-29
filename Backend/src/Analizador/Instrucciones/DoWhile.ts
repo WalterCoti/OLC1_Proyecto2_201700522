@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -113,11 +113,11 @@ export default class DOWHILE extends Instruccion {
         //ERROR
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("DO-WHILE");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("DO-WHILE");
         nodo.agregarHijo("DO");
         nodo.agregarHijo("{");
-        let nodo2:nodoAST = new nodoAST("INSTRUCCIONES");
+        let nodo2:NodeAST = new NodeAST("INSTRUCCIONES");
         for(let element of this.bloque1){
             if(typeof(element) !== typeof("")){
                 nodo2.agregarHijo(undefined, undefined, element.getNodo());

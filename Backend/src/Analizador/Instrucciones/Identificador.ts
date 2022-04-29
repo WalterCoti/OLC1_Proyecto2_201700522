@@ -3,7 +3,7 @@ import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
 import { Expresion } from "../Expresiones/Expresion";
 import Simbolo from "../AST/simbolo";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 
 export default class identificador extends Expresion {
     public ID: String;
@@ -19,8 +19,8 @@ export default class identificador extends Expresion {
        return this;
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("IDENTIFICADOR");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("IDENTIFICADOR");
         return nodo;
     }
 

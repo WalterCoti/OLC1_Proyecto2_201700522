@@ -1,4 +1,4 @@
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
@@ -10,7 +10,7 @@ export default class Aritmetica extends Expresion {
     public ExpresionIzquierda:Expresion|undefined;
     public ExpresionDerecha: Expresion|undefined;
     private operador:OperadorAritmetico;
-    constructor(operador:OperadorAritmetico, linea:number, columna:number, valor:any, Tipo:Tipo, iz:Expresion, der?:Expresion){
+    constructor(operador:OperadorAritmetico, linea:number, columna:number, valor:any, Tipo_:Tipo, iz:Expresion, der?:Expresion){
         super(linea,columna,valor,iz.Tipo);
         if (der) {
             this.ExpresionDerecha =der;
@@ -669,8 +669,8 @@ export default class Aritmetica extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST  = new nodoAST("ARITMETICA");
+    getNodo():NodeAST{
+        let nodo:NodeAST  = new NodeAST("ARITMETICA");
         if(!this.ExpresionDerecha && this.ExpresionIzquierda)
         {
             nodo.agregarHijo(this.operador + "");

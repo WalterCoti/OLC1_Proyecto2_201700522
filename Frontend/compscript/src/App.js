@@ -32,7 +32,7 @@ function App() {
     fileReader.readAsText(file);
 
     fileReader.onload = () =>{
-      console.log(fileReader.result);
+      console.log("Archivo Cargado exitosamente");
       setValueEditor(fileReader.result);
     }
 
@@ -44,6 +44,7 @@ function App() {
   const newFile = () =>{
     setValueEditor("");
   }
+
   const printconsola = (imprimir_) =>{
       setValorconsola(imprimir_);
   }
@@ -53,9 +54,29 @@ function App() {
     editorRef.current = editor;
   }
 
-  const showValue = ()=> {
-    printconsola(editorRef.current.getValue());
+  const compilar = () =>{
+    
+    const data ={
+      "input" : valueEditor
+    }
+
+    fetch('http://localhost:3500/compile',{
+      method: 'POST',
+      headers:{"Content-Type" : "application/json"},
+      body: JSON.stringify( {compilar : data})
+    })
+      .then(response => response.json())
+      .then(data =>{
+        var datares = JSON.stringify(data);
+        var consoleres = JSON.parse(datares).consola
+        setValorconsola(consoleres);
+        //console.log('recibido', data);
+      });
+    
   }
+
+
+
   return (
     <header className="App-header">
       <div>
@@ -125,7 +146,7 @@ function App() {
         color="primary"
         className={classes.button}
         startIcon={<PlayArrowIcon />}
-        onClick ={showValue}
+        onClick ={compilar}
       >Ejecutar</Button>
     </header>
   );

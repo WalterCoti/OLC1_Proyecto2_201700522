@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "../Expresiones/Expresion";
 import Literal from "../Expresiones/Literal";
@@ -140,8 +140,8 @@ export default class DECLARAR extends Instruccion {
         return false;
     }
 
-    getNodo():nodoAST{
-        let nodo:nodoAST = new nodoAST("DECLARAR");
+    getNodo():NodeAST{
+        let nodo:NodeAST = new NodeAST("DECLARAR");
         if (typeof(this.DIMENSION)!==typeof(-1) && this.exp instanceof Array) {
             nodo.agregarHijo(undefined, undefined,this.tipo.getNodo())
             nodo.agregarHijo("[");
@@ -149,7 +149,7 @@ export default class DECLARAR extends Instruccion {
             nodo.agregarHijo(this.ID);
             nodo.agregarHijo("=");
             nodo.agregarHijo("{");
-            let nodo2 = new nodoAST("EXPRESIONES")
+            let nodo2 = new NodeAST("EXPRESIONES")
             for(let element of this.exp){
                 nodo2.agregarHijo(undefined, undefined,element.getNodo());
             }

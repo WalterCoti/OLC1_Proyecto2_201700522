@@ -1,5 +1,5 @@
 import { Instruccion } from "../Abstracto/instrucciones";
-import { nodoAST } from "../Abstracto/NodeAST";
+import { NodeAST } from "../Abstracto/NodeAST";
 import Excepcion from "../Exceptions/Excepcion";
 import { Expresion } from "./Expresion";
 import ArbolAST from "../AST/ASTTree";
@@ -52,8 +52,8 @@ export default class TERNARIO extends Expresion {
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
-    getNodo():nodoAST{
-        let nodo = new nodoAST("TERNARIO");
+    getNodo():NodeAST{
+        let nodo = new NodeAST("TERNARIO");
         nodo.agregarHijo(undefined, undefined, this.condicion.getNodo());
         nodo.agregarHijo("?");
         nodo.agregarHijo(undefined, undefined,this.exp1.getNodo());
