@@ -37,11 +37,8 @@ export default class Entorno
                                 return true;
                             }
                         }
-                        //ERROR
                         return false
-                    }else{
-                        
-                        //ERROR
+                    }else{    
                         return false;
                     }
                 }
@@ -53,7 +50,7 @@ export default class Entorno
 
     public get(variable:String):Simbolo{
         variable = variable.toUpperCase();
-        let x = 0;
+        let tmp = 0;
         for(var temp:Entorno = this; temp!=null; temp = temp.anterior ){
             if (temp.tabla.has(variable)) {
                 var result = temp.tabla.get(variable);
@@ -61,9 +58,8 @@ export default class Entorno
                     return result;
                 }
             }
-            x++
+            tmp++
         }
-        //Error
         return new Simbolo(new Tipo(tipos.ERROR), 'ERROR', undefined);
     }
 

@@ -5,7 +5,7 @@ import { Expresion } from "../Expresiones/Expresion";
 import Literal from "../Expresiones/Literal";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
-import ListaSimbolo from "../AST/Lsimbolos";
+import lstSimbolo from "../AST/Lsimbolos";
 import Tipo, { tipos } from "../AST/Stype";
 
 export default class DECLARAR extends Instruccion {
@@ -15,7 +15,7 @@ export default class DECLARAR extends Instruccion {
     public tipo2:Tipo | any;
     public DIMENSION:Expresion|any;
     public CANTIDAD:Expresion|any;
-    public lista:any[] = [];
+    public lst:any[] = [];
     public v1 = 0;
     public v2 = 0;
     constructor(linea:number, columna:number, ID:string, Tipo:Tipo, DIMENSION?:Expresion, CANTIDAD?:Expresion, exp?:Expresion, tipo2?:Tipo){
@@ -46,7 +46,7 @@ export default class DECLARAR extends Instruccion {
         if (this.tipo2 instanceof Tipo) {
             if (this.tipo2.tipos!==this.tipo.tipos) {
                 arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error,"Semantico","El tipo de declaración no coincide con el de la variable",this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error,"Semantico","El tipo de declaración no coincide con el tipo de la variable",this.linea, this.columna));
                 return false;
             }
         }
@@ -59,18 +59,18 @@ export default class DECLARAR extends Instruccion {
                 if (value) {
                     if (value.Tipo.tipos!== this.tipo.tipos) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","tipo dentro de valores de la declaración no coincide", value.linea, value.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","el tipo dentro de valores de la declaración no coincide", value.linea, value.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     }
                     nueva.push(value.valor);
-                    this.lista.push(new Literal(this.linea, this.columna, value.valor, this.tipo.tipos));
+                    this.lst.push(new Literal(this.linea, this.columna, value.valor, this.tipo.tipos));
                 }else{
                     arbol.num_error++;
                     arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","fallo al obtener el valor", valores.linea, valores.columna));
                     return new Literal(this.linea, this.columna, undefined, tipos.ERROR); 
                 }
             }
-            this.lista = nueva;
+            this.lst = nueva;
             nueva_variable = new Literal(this.linea, this.columna, nueva, this.tipo.tipos, true);
         }
         if(comprobar.tipo.tipos===tipos.ERROR){
@@ -121,11 +121,9 @@ export default class DECLARAR extends Instruccion {
             }
             if (tabla.nombre.toUpperCase()==="GLOBAL") {
                 if (v1!==-1) {
-                    arbol.lista_simbolos.push(new ListaSimbolo(arbol.lista_simbolos.length,this.ID, "VECTOR", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
-                }else if (v2!==-1) {
-                    arbol.lista_simbolos.push(new ListaSimbolo(arbol.lista_simbolos.length,this.ID, "LISTA", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
+                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,this.ID, "VECTOR", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));              
                 }else{
-                    arbol.lista_simbolos.push(new ListaSimbolo(arbol.lista_simbolos.length,this.ID, "VARIABLE", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
+                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,this.ID, "VARIABLE", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
                 }
             }
             this.ast = true;
@@ -170,31 +168,6 @@ export default class DECLARAR extends Instruccion {
             nodo.agregarHijo(undefined,undefined,g.getNodo());
             nodo.agregarHijo("]");
             nodo.agregarHijo(";");
-        }
-        else if (typeof(this.CANTIDAD)!==typeof(-1)) {
-            if (!this.exp) {
-                nodo.agregarHijo("LIST");
-                nodo.agregarHijo("<");
-                nodo.agregarHijo(undefined, undefined,this.tipo.getNodo())
-                nodo.agregarHijo(">");
-                nodo.agregarHijo(this.ID);
-                nodo.agregarHijo("=");
-                nodo.agregarHijo("new");
-                nodo.agregarHijo("LIST");
-                nodo.agregarHijo("<");
-                nodo.agregarHijo(undefined, undefined,this.tipo2.getNodo());
-                nodo.agregarHijo(">");
-                nodo.agregarHijo(";");
-            }else{
-                nodo.agregarHijo("LIST");
-                nodo.agregarHijo("<");
-                nodo.agregarHijo(undefined, undefined,this.tipo.getNodo())
-                nodo.agregarHijo(">");
-                nodo.agregarHijo(this.ID);
-                nodo.agregarHijo("=");
-                nodo.agregarHijo(undefined, undefined,this.exp.getNodo());
-                nodo.agregarHijo(";");
-            }
         }else{
             if (this.exp) {
                 nodo.agregarHijo(this.tipo.getTipo());

@@ -10,13 +10,13 @@ export abstract class Expresion extends node {
     public valor:any;
     public nombre:string|any;
     public posicion:Expresion|any;
-    constructor(linea : number, columna:number, valor:any, tipo:Tipo, nombre?:string, Posicion?:Expresion) {
+    constructor(linea : number, columna:number, valor:any, tipo:Tipo, nombre?:string, Pos_?:Expresion) {
         super(linea, columna);
         this.Tipo = tipo;
         this.valor = valor;
         this.nombre = nombre;
-        if (Posicion) {
-            this.posicion = Posicion;
+        if (Pos_) {
+            this.posicion = Pos_;
         }else{
             this.posicion = -1;
         }

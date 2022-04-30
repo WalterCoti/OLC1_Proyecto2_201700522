@@ -43,34 +43,35 @@ function App() {
 
   const newFile = () =>{
     setValueEditor("");
+    editorRef.current = "";
   }
-
+/*
   const printconsola = (imprimir_) =>{
       setValorconsola(imprimir_);
   }
- 
+ */
 
   const handleEditorDidMount = (editor, monaco) =>{
     editorRef.current = editor;
   }
 
   const compilar = () =>{
-    
+    const editocontent = editorRef.current.getValue()
     const data ={
-      "input" : valueEditor
+      "input" : editocontent
     }
 
     fetch('http://localhost:3500/compile',{
       method: 'POST',
       headers:{"Content-Type" : "application/json"},
-      body: JSON.stringify( {compilar : data})
+      body: JSON.stringify(data)
     })
       .then(response => response.json())
       .then(data =>{
         var datares = JSON.stringify(data);
         var consoleres = JSON.parse(datares).consola
         setValorconsola(consoleres);
-        //console.log('recibido', data);
+        console.log('response: ', data);
       });
     
   }

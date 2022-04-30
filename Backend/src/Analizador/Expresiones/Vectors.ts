@@ -24,7 +24,7 @@ export default class VECTOR extends Expresion {
                 return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
             }else if(this.tip==="LIST" && expre.CANTIDAD===-1){
                 arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de lista erronea",this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de lst erronea",this.linea, this.columna));
                 return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
             }
             const pos = this.posicion.getValor(arbol, tabla);
@@ -42,29 +42,18 @@ export default class VECTOR extends Expresion {
             return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
         }else{
             arbol.num_error++;
-            arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","La lista indicada no existe",this.linea, this.columna));
+            arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","La lst indicada no existe",this.linea, this.columna));
             return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
         }
         
     }
     getNodo():NodeAST{
         let nodo = new NodeAST("");
-        if (this.tip==="LIST") {
-            nodo = new NodeAST("LISTA");
-            nodo.agregarHijo(this.nombre);
-            nodo.agregarHijo("[");
-            nodo.agregarHijo("[");
-            nodo.agregarHijo(undefined, undefined, this.posicion.getNodo());
-            nodo.agregarHijo("]");
-            nodo.agregarHijo("]");
-
-        }else{
             nodo = new NodeAST("VECTOR");
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("[");
             nodo.agregarHijo(undefined, undefined, this.posicion.getNodo());
             nodo.agregarHijo("]");
-        }
         return nodo;
     }
 

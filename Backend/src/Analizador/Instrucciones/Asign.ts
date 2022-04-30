@@ -11,17 +11,17 @@ import Literal from "../Expresiones/Literal";
 export default class ASIGNAR extends Instruccion {
     public exp: Expresion | undefined;
     public ID:string;
-    public UBICACION: any;
+    public Posicion_: any;
     public tip:string;
     public ubic: Literal|any;
-    constructor(linea:number, columna:number, ID:string,UBICACION?:any, exp?:Expresion, tipv:string=""){
+    constructor(linea:number, columna:number, ID:string,Posicion_?:any, exp?:Expresion, tipv:string=""){
         super(linea, columna);
         this.exp = exp;
         this.ID=ID;
-        if (UBICACION) {
-            this.UBICACION = UBICACION;
+        if (Posicion_) {
+            this.Posicion_ = Posicion_;
         }else{
-            this.UBICACION = -1;
+            this.Posicion_ = -1;
         }
         this.tip = tipv;
     }
@@ -31,8 +31,8 @@ export default class ASIGNAR extends Instruccion {
     ejecutar(arbol: ArbolAST, tabla: Entorno) {
         const expre = tabla.get(this.ID);
         let ubic = -1;
-        if(this.UBICACION!=-1){
-            ubic = this.UBICACION.getValor(arbol, tabla);
+        if(this.Posicion_!=-1){
+            ubic = this.Posicion_.getValor(arbol, tabla);
         }
         if(expre.tipo.tipos!== tipos.ERROR){
             let value = this.exp?.getValor(arbol, tabla);
@@ -66,7 +66,7 @@ export default class ASIGNAR extends Instruccion {
 
     getNodo():NodeAST{
         let nodo:NodeAST = new NodeAST("ASIGNAR");
-        if (this.UBICACION!==-1) {
+        if (this.Posicion_!==-1) {
             if (this.tip==="LIST") {
                 nodo.agregarHijo(this.ID);
                 nodo.agregarHijo("[");

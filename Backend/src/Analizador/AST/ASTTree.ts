@@ -1,14 +1,14 @@
 import Entorno from "./Environment";
 import Excepcion from "../Exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
-import ListaSimbolo from "./Lsimbolos";
+import lstSimbolo from "./Lsimbolos";
 import { Expresion } from "../Expresiones/Expresion";
 import { NodeAST } from "../Abstracto/NodeAST";
 
 
 export default class ArbolAST {
     public instrucciones: Array<any>;
-    public FUNCIONES: Array<Instruccion> = new Array<Instruccion>();
+    public Listfunciones: Array<Instruccion> = new Array<Instruccion>();
     public errores: Array<Excepcion> = new Array<Excepcion>();
     public consola: String;
     public global: Entorno;
@@ -18,30 +18,31 @@ export default class ArbolAST {
     public pilaFuncion:any[] = [];
     private c:number=0;
     private grafo:string="";
-    public exec: Array<Expresion> = new Array<Expresion>();
-    public lista_simbolos:Array<any> = new Array<any>();
+    public run_: Array<Expresion> = new Array<Expresion>();
+    public lst_simbolos:Array<any> = new Array<any>();
+    
     constructor(instrucciones: Array<Instruccion>){
         this.instrucciones = instrucciones;
         this.consola = "";
         this.global = new Entorno();
     }
 
-    public updateConsola(update:String){
+    public writeconsola(update:String){
         this.consola = `${this.consola}${update}\n`;
     }
 
     public EjecutarBloque() {
-        if (this.exec.length===0) {
+        if (this.run_.length===0) {
             this.num_error++;
-            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "No existe ninguna función principal exec", -1, -1));
+            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "No existe ninguna función principal RUN", 0, 0));
             return;
         }
-        if (this.exec.length>1) {
+        if (this.run_.length>1) {
             this.num_error++;
-            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "Existen 2 exec en la ejecución", -1, -1));
+            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "Existe mas de una llamada RUN", -1, -1));
             return;
         }
-        for(let elemento of this.FUNCIONES){
+        for(let elemento of this.Listfunciones){
             if(typeof(elemento) !== typeof("")){
                 elemento.ejecutar(this, this.global);
             }
@@ -50,16 +51,16 @@ export default class ArbolAST {
         for(let elemento of this.instrucciones){
             if(typeof(elemento) !== typeof("")){
                 let valor = elemento;
-                if (valor.ID && !valor.UBICACION && valor.CANTIDAD && valor.DIMENSION) {
+                if (valor.ID && !valor.Posicion_ && valor.CANTIDAD && valor.DIMENSION) {
                     elemento.ejecutar(this, this.global);
                 }else{
                     this.num_error++;
-                    this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "no se puede ejecutar una instrucción fuera de una función o metodo", elemento.linea, elemento.columna));
+                    this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "no es posible ejecutar una instrucción fuera de una función o metodo", elemento.linea, elemento.columna));
                 }
             }
         }
-        if (this.exec.length===1) {
-            this.exec[0].getValor(this, this.global);
+        if (this.run_.length===1) {
+            this.run_[0].getValor(this, this.global);
         }
     }
 
@@ -92,15 +93,15 @@ export default class ArbolAST {
             let instr:NodeAST  = new NodeAST("INSTRUCCIONES");
 
 
-            for(let elemento of this.FUNCIONES){
+            for(let elemento of this.Listfunciones){
                 if(typeof(elemento) !== typeof("")){
                     instr.agregarHijo(undefined, undefined, elemento.getNodo());
                 }
             }
-            if (this.exec.length===1) {
-                let nodo = new NodeAST("EXEC");
-                nodo.agregarHijo("EXEC");
-                nodo.agregarHijo(undefined, this.exec[0].getNodo().getHijos(), undefined);
+            if (this.run_.length===1) {
+                let nodo = new NodeAST("RUN");
+                nodo.agregarHijo("RUN");
+                nodo.agregarHijo(undefined, this.run_[0].getNodo().getHijos(), undefined);
                 instr.agregarHijo(undefined, undefined, nodo);
             }
             let x = 0;

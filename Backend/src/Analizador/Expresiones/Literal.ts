@@ -7,7 +7,7 @@ import { Expresion } from "./Expresion";
 
 export default class Literal extends Expresion {
     
-    public LOV:string;
+    public Ltmp:string;
     constructor(linea: number, columna: number, valor: any, T: tipos, vector?:boolean, L:string="") {
         const tip = new Tipo(T);
         if (!vector) {
@@ -25,12 +25,15 @@ export default class Literal extends Expresion {
                 case tipos.DOBLE:
                     valor = Number(parseFloat(valor));
                     break;
+                case tipos.VOID:
+                    valor = "";
+                    break;
                 default:
                     valor = valor;
             }
         }
         super(linea, columna, valor, tip);
-        this.LOV = L;
+        this.Ltmp = L;
     }
     public getValor(arbol: ArbolAST, tabla: Entorno): Expresion {
         return this;

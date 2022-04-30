@@ -4,39 +4,42 @@ import ArbolAST from './AST/ASTTree';
 import Entorno from './AST/Environment';
 
 class Control {
-
-    public  async index(req: Request, res: Response) {
+    
+    public index( res: Response) {
         res.json();
     }
 
     public interpretar(req: Request, res: Response) {
-        const compita = req.body.compilar;
-        console.log(compita);
+        const {input} = req.body;
+        let ast = new ArbolAST([]);
         try {
-            let parse = require("./analizador");
-            let ast = new ArbolAST([]);
+            
+            const parsergen = require("./analizador");
+            let ast = new ArbolAST([]); 
             try{
-                ast = parse.parse(compita);
+                //ast = new parsergen(input);
+                ast = parsergen.parse(input);
                 if (typeof(ast)==typeof(true)) {
                     ast = new ArbolAST([]);
                     ast.num_error++;
-                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error inrecuperable",-1,-1));
+                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error sintactico",0,0));
                 }
             }catch(e){
                 ast.num_error++;
-                ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error inrecuperable",-1,-1));
+                ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error inrecuperable",0,0));
             }
             if (typeof(ast)===typeof(new ArbolAST([]))) {
+                            
                 const tabla = new Entorno();
                 ast.global = tabla;
                 ast.EjecutarBloque();
                 if (ast.errores.length>0) {
-                    ast.consola+="\n*******************Errores*********************";
+                    ast.consola+="\n-----Errores Detectados-----";
                     for(let error of ast.errores){
                         ast.consola+="\n"+error.toString();
                     }
                 }
-                res.json({consola: ast.consola, Errores: ast.errores, Simbolo:ast.lista_simbolos});
+                res.json({consola: ast.consola, Errores: ast.errores, Simbolo:ast.lst_simbolos});
             }else{
                 res.json({consola:"", Errores:[], Simbolo:[]});
             }
@@ -49,7 +52,7 @@ class Control {
     public open(req: Request, res: Response){
         try{
             const Contenido = req.body.Contenido;
-            let parse = require("./Analizador/analizador");
+            let parse = require("./analizador");
             let ast = new ArbolAST([]);
             ast = parse.parse(Contenido);
             ast.openFile();

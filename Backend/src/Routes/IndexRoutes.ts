@@ -9,7 +9,7 @@ class IndexRoutes {
 
     public config(): void {
         this.router.post("/compile", control.interpretar);
-        this.router.post("/Graficar", control.open);
+        this.router.post("/graficar", control.open);
     }
 }
 const indexRoutes = new IndexRoutes();

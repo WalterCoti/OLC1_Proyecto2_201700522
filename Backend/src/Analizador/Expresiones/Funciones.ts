@@ -4,9 +4,6 @@ import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
 import Literal from "./Literal";
-import RETURN from "../Instrucciones/Return";
-import ListaSimbolo from "../AST/Lsimbolos";
-import FUNCIONF from "../Instrucciones/Funcion";
 import { NodeAST } from "../Abstracto/NodeAST";
 
 export default class FUNCION extends Expresion {
@@ -87,14 +84,14 @@ export default class FUNCION extends Expresion {
                                 return new Literal(this.linea, this.columna, undefined, tipos.CADENA);
 
                             }else{
-                                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","NO SE PUEDE RETORNAR FUERA DE UNA FUNCION", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","No se puee retornar fuera de una funcion", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                                 
                             } 
                         }
                         if (res.nombre==="BREAK") {
                             arbol.num_error++;
-                            arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTIO", "No se puede utilizar break dentro de una función",this.linea, this.columna));
+                            arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO", "No se puede utilizar break dentro de una función",this.linea, this.columna));
                             return new Literal(this.linea, this.columna, undefined, tipos.ERROR);   
                         }
                         if (res.nombre==="CONTINUE") {

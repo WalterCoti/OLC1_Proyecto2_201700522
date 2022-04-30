@@ -15,7 +15,7 @@ export default class DECREMENTO extends Expresion {
         this.exp = exp;
     }
     public getValor(arbol: ArbolAST, tabla: Entorno): Expresion {
-        let nom=this.exp.nombre;
+        let name_=this.exp.nombre;
         let val = this.exp.getValor(arbol, tabla);
         if (val.nombre === "FUNCION") {
             this.exp.nombre = "";
@@ -41,7 +41,7 @@ export default class DECREMENTO extends Expresion {
                 let expre:any = undefined;
                 if (val.nombre === "FUNCION") {
                     expre = val;
-                    this.exp.nombre = nom;
+                    this.exp.nombre = name_;
                 }else{
                     expre = this.exp.getValor(arbol, tabla)
                 }

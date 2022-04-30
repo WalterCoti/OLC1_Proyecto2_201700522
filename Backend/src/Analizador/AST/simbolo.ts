@@ -9,7 +9,7 @@ export default class Simbolo
     public valor: any;
     public DIMENSION: number|any;
     public CANTIDAD: number|any;
-    public LOV:string = "";
+    public Ltmp:string = "";
     constructor(tipo: Tipo, identificador: string, valor?:any, DIMENSION:number=-1, CANTIDAD:number=-1)
     {
         this.tipo = tipo;
@@ -21,7 +21,7 @@ export default class Simbolo
             this.valor = valor;
             if (valor.valor || typeof(this.valor.valor)===typeof(true)) {
                 if(this.DIMENSION!=-1 && typeof(valor.valor)!==typeof([])){
-                    this.LOV = "VECTOR";
+                    this.Ltmp = "VECTOR";
                     switch(this.tipo.tipos){
                         case tipos.ENTERO:
                             if(this.DIMENSION!=-1){
@@ -78,7 +78,7 @@ export default class Simbolo
                         this.valor = valor;
                     }else{
                         if (this.DIMENSION!=-1) {
-                            this.LOV = "VECTOR";
+                            this.Ltmp = "VECTOR";
                         }
                         this.valor = valor;
                     }
@@ -86,7 +86,6 @@ export default class Simbolo
             }else
             {
                 this.valor = valor;
-                
                 switch (tipo.tipos){
                     case tipos.ENTERO:
                         if(this.CANTIDAD!=-1){
@@ -130,9 +129,6 @@ export default class Simbolo
                         break;
                     default:
                         break;
-                }
-                if (this.CANTIDAD!==-1) {
-                    this.LOV = "LISTA";
                 }
             }
         }

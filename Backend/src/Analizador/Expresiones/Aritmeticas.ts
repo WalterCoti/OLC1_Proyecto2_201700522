@@ -7,26 +7,26 @@ import { Expresion } from "./Expresion";
 import Literal from "./Literal";
 
 export default class Aritmetica extends Expresion {
-    public ExpresionIzquierda:Expresion|undefined;
-    public ExpresionDerecha: Expresion|undefined;
+    public Expizquierdo:Expresion|undefined;
+    public Expderecho: Expresion|undefined;
     private operador:OperadorAritmetico;
     constructor(operador:OperadorAritmetico, linea:number, columna:number, valor:any, Tipo_:Tipo, iz:Expresion, der?:Expresion){
         super(linea,columna,valor,iz.Tipo);
         if (der) {
-            this.ExpresionDerecha =der;
+            this.Expderecho =der;
         }
-        this.ExpresionIzquierda = iz;
+        this.Expizquierdo = iz;
         this.operador = operador;
     }
 
     getValor(arbol: ArbolAST, tabla: Entorno):Expresion {
         var izquierda:Expresion|undefined;
         var derecha:Expresion|undefined;
-        if (this.ExpresionIzquierda) {
-            izquierda = this.ExpresionIzquierda.getValor(arbol, tabla);
+        if (this.Expizquierdo) {
+            izquierda = this.Expizquierdo.getValor(arbol, tabla);
         }
-        if (this.ExpresionDerecha) {
-            derecha = this.ExpresionDerecha.getValor(arbol, tabla);
+        if (this.Expderecho) {
+            derecha = this.Expderecho.getValor(arbol, tabla);
         }
         switch (this.operador) {
             case OperadorAritmetico.SUMA:
@@ -671,16 +671,16 @@ export default class Aritmetica extends Expresion {
 
     getNodo():NodeAST{
         let nodo:NodeAST  = new NodeAST("ARITMETICA");
-        if(!this.ExpresionDerecha && this.ExpresionIzquierda)
+        if(!this.Expderecho && this.Expizquierdo)
         {
             nodo.agregarHijo(this.operador + "");
-            nodo.agregarHijo(undefined, undefined,this.ExpresionIzquierda.getNodo());
+            nodo.agregarHijo(undefined, undefined,this.Expizquierdo.getNodo());
         }
-        else if(this.ExpresionDerecha && this.ExpresionIzquierda)
+        else if(this.Expderecho && this.Expizquierdo)
         {
-            nodo.agregarHijo(undefined, undefined,this.ExpresionIzquierda.getNodo());
+            nodo.agregarHijo(undefined, undefined,this.Expizquierdo.getNodo());
             nodo.agregarHijo(this.operador + "");
-            nodo.agregarHijo(undefined, undefined,this.ExpresionDerecha.getNodo());
+            nodo.agregarHijo(undefined, undefined,this.Expderecho.getNodo());
         } 
         return nodo;
     }

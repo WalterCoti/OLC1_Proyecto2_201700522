@@ -43,46 +43,36 @@ export default class NATIVA extends Expresion {
                     switch(valor.Tipo.tipos){
                         case tipos.ENTERO:
                             if (comp instanceof Simbolo) {
-                                if (comp.LOV==="VECTOR") {
+                                if (comp.Ltmp==="VECTOR") {
                                     return new Literal(this.linea, this.columna, "INT[]", tipos.CADENA);
-                                }else{
-                                    return new Literal(this.linea, this.columna, "LIST<INT>", tipos.CADENA);
                                 }
                             }
                             return new Literal(this.linea, this.columna, "INT", tipos.CADENA);
                         case tipos.BOOLEANO:
                             if (comp instanceof Simbolo) {
-                                if (comp.LOV==="VECTOR") {
+                                if (comp.Ltmp==="VECTOR") {
                                     return new Literal(this.linea, this.columna, "BOOLEAN[]", tipos.CADENA);
-                                }else{
-                                    return new Literal(this.linea, this.columna, "LIST<BOOLEAN>", tipos.CADENA);
                                 }
                             }
                             return new Literal(this.linea, this.columna, "BOOLEAN", tipos.CADENA);
                         case tipos.CARACTER:
                             if (comp instanceof Simbolo) {
-                                if (comp.LOV==="VECTOR") {
+                                if (comp.Ltmp==="VECTOR") {
                                     return new Literal(this.linea, this.columna, "CHAR[]", tipos.CADENA);
-                                }else{
-                                    return new Literal(this.linea, this.columna, "LIST<CHAR>", tipos.CADENA);
                                 }
                             }
                             return new Literal(this.linea, this.columna, "CHAR", tipos.CADENA);
                         case tipos.DOBLE:
                             if (comp instanceof Simbolo) {
-                                if (comp.LOV==="VECTOR") {
+                                if (comp.Ltmp==="VECTOR") {
                                     return new Literal(this.linea, this.columna, "DOUBLE[]", tipos.CADENA);
-                                }else{
-                                    return new Literal(this.linea, this.columna, "LIST<DOUBLE>", tipos.CADENA);
                                 }
                             }
                             return new Literal(this.linea, this.columna, "DOUBLE", tipos.CADENA);
                         case tipos.CADENA:
                             if (comp instanceof Simbolo) {
-                                if (comp.LOV==="VECTOR") {
+                                if (comp.Ltmp==="VECTOR") {
                                     return new Literal(this.linea, this.columna, "STRING[]", tipos.CADENA);
-                                }else{
-                                    return new Literal(this.linea, this.columna, "LIST<STRING>", tipos.CADENA);
                                 }
                             }
                             return new Literal(this.linea, this.columna, "STRING", tipos.CADENA);
@@ -93,7 +83,7 @@ export default class NATIVA extends Expresion {
                     if (valor.valor instanceof Literal) {
                         if (valor.valor.valor instanceof Array) {
                             arbol.num_error++;
-                            arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","No se puede convertir un vector o lista en string",this.linea, this.columna));
+                            arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","No se puede convertir un vector  en string",this.linea, this.columna));
                             return new Literal(this.linea, this.columna, "error", tipos.ERROR);
                         }
                     }
@@ -101,7 +91,7 @@ export default class NATIVA extends Expresion {
                 case "TOCHARARRAY":
                     if (typeof(valor.valor)!== typeof("")) {
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es una string",this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es de tipo string",this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     }
                     return new Literal(this.linea, this.columna, Array.from(valor.valor), tipos.CARACTER);
@@ -113,7 +103,7 @@ export default class NATIVA extends Expresion {
             }
         }
         arbol.num_error++;
-        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor indicado no existe",this.linea, this.columna));
+        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor no existe",this.linea, this.columna));
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 

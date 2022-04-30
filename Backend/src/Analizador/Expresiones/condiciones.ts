@@ -7,26 +7,26 @@ import { Expresion } from "./Expresion";
 import Literal from "./Literal";
 
 export default class condicion extends Expresion {
-    public ExpresionIzquierda:Expresion|undefined;
-    public ExpresionDerecha: Expresion|undefined;
+    public Expizquierdo:Expresion|undefined;
+    public Expderecho: Expresion|undefined;
     public operador = "";
     constructor(linea:number, columna:number, valor:any, operador:string, iz:Expresion, der?:Expresion){
         super(linea,columna,valor,new Tipo(tipos.BOOLEANO));
         if (der) {
-            this.ExpresionDerecha =der;
+            this.Expderecho =der;
         }
-        this.ExpresionIzquierda = iz;
+        this.Expizquierdo = iz;
         this.operador = operador;
     }
 
     getValor(arbol: ArbolAST, tabla: Entorno):Expresion {
         var izquierda:Expresion|undefined;
         var derecha:Expresion|undefined;
-        if (this.ExpresionIzquierda) {
-            izquierda = this.ExpresionIzquierda.getValor(arbol, tabla);
+        if (this.Expizquierdo) {
+            izquierda = this.Expizquierdo.getValor(arbol, tabla);
         }
-        if (this.ExpresionDerecha) {
-            derecha = this.ExpresionDerecha.getValor(arbol, tabla);
+        if (this.Expderecho) {
+            derecha = this.Expderecho.getValor(arbol, tabla);
         }
 
         switch(this.operador){
@@ -852,13 +852,13 @@ export default class condicion extends Expresion {
 
     getNodo():NodeAST{
         let nodo = new NodeAST("CONDICION");
-        if (this.ExpresionDerecha && this.ExpresionIzquierda) {
-            nodo.agregarHijo(undefined,undefined,this.ExpresionIzquierda.getNodo());
+        if (this.Expderecho && this.Expizquierdo) {
+            nodo.agregarHijo(undefined,undefined,this.Expizquierdo.getNodo());
             nodo.agregarHijo(this.operador);
-            nodo.agregarHijo(undefined,undefined,this.ExpresionDerecha.getNodo());
-        }else if (this.ExpresionIzquierda) {
+            nodo.agregarHijo(undefined,undefined,this.Expderecho.getNodo());
+        }else if (this.Expizquierdo) {
             nodo.agregarHijo(this.operador);
-            nodo.agregarHijo(undefined,undefined,this.ExpresionIzquierda.getNodo());
+            nodo.agregarHijo(undefined,undefined,this.Expizquierdo.getNodo());
         }
         return nodo;
     }

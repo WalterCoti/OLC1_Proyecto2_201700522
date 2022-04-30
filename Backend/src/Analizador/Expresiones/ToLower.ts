@@ -22,7 +22,7 @@ export default class TOLOWER extends Expresion {
                 return new Literal(this.linea, this.columna, comprobar.valor.toLowerCase(), tipos.CADENA);
             }
             arbol.num_error++;
-            arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","toUpper solo se puede realizar en un string",this.linea, this.columna));
+            arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","ToLower solo se puede realizar en un string",this.linea, this.columna));
             return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
         }
         if (this.exp instanceof VARIABLE) {

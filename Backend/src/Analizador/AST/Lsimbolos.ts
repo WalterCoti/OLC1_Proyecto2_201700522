@@ -1,4 +1,4 @@
-export default class ListaSimbolo {
+export default class lstSimbolo {
     public ID:string;
     public grupo: string;
     public tipo: string;
