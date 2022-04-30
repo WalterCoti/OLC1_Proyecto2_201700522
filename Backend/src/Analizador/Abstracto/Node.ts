@@ -8,3 +8,4 @@ export abstract class node {
         this.columna = columna;
     }
 }
+
