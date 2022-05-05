@@ -20,23 +20,23 @@ export default class CASTEO extends Expresion {
         switch(this.tipo.tipos){
             case tipos.CADENA:
                 arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de un string", this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de un String", this.linea, this.columna));
                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
             case tipos.BOOLEANO:
                 arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de double", this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de Double", this.linea, this.columna));
                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
             case tipos.DOBLE:
                 switch(valor?.Tipo.tipos){
                     case tipos.BOOLEANO:
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de double a boolean", this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de Double a Boolean", this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     case tipos.CARACTER:
                         return new Literal(this.linea, this.columna, valor.valor.charCodeAt(), tipos.DOBLE);
                     case tipos.CADENA:
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de double a string", this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de Double a String", this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     case tipos.ENTERO:
                         return new Literal(this.linea, this.columna, Number(valor.valor), tipos.DOBLE);
@@ -47,13 +47,13 @@ export default class CASTEO extends Expresion {
                 switch(valor?.Tipo.tipos){
                     case tipos.BOOLEANO:
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de int a boolean", this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de Entero a Boolean", this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     case tipos.CARACTER:
                         return new Literal(this.linea, this.columna, valor.valor.charCodeAt(), tipos.ENTERO);
                     case tipos.CADENA:
                         arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de int a string", this.linea, this.columna));
+                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO","No se puede hacer casteo de Entero a String", this.linea, this.columna));
                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                     case tipos.ENTERO:
                         return new Literal(this.linea, this.columna, Number(valor.valor), tipos.ENTERO);
@@ -87,7 +87,7 @@ export default class CASTEO extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("CASTEO");
+        let nodo = new NodeAST("Casteo");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.Tipo.getNodo());
         nodo.agregarHijo(")");

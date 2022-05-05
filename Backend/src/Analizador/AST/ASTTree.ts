@@ -1,24 +1,23 @@
 import Entorno from "./Environment";
 import Excepcion from "../Exceptions/Excepcion";
 import { Instruccion } from "../Abstracto/instrucciones";
-import lstSimbolo from "./Lsimbolos";
 import { Expresion } from "../Expresiones/Expresion";
 import { NodeAST } from "../Abstracto/NodeAST";
 
 
 export default class ArbolAST {
     public instrucciones: Array<any>;
-    public Listfunciones: Array<Instruccion> = new Array<Instruccion>();
+    public FUNCIONES: Array<Instruccion> = new Array<Instruccion>();
     public errores: Array<Excepcion> = new Array<Excepcion>();
     public consola: String;
     public global: Entorno;
-    public raiz:NodeAST = new NodeAST("INSTRUCCIONES");
+    public raiz:NodeAST = new NodeAST("Instrucciones");
     public num_error:number = 0;
     public pilaCiclo:any[] = [];
     public pilaFuncion:any[] = [];
-    private c:number=0;
+    private aux:number=0;
     private grafo:string="";
-    public run_: Array<Expresion> = new Array<Expresion>();
+    public run: Array<Expresion> = new Array<Expresion>();
     public lst_simbolos:Array<any> = new Array<any>();
     
     constructor(instrucciones: Array<Instruccion>){
@@ -27,22 +26,18 @@ export default class ArbolAST {
         this.global = new Entorno();
     }
 
-    public writeconsola(update:String){
-        this.consola = `${this.consola}${update}\n`;
-    }
-
     public EjecutarBloque() {
-        if (this.run_.length===0) {
+        if (this.run.length===0) {
             this.num_error++;
-            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "No existe ninguna función principal RUN", 0, 0));
+            this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "No existe ninguna llamada a la función principal RUN", 0, 0));
             return;
         }
-        if (this.run_.length>1) {
+        if (this.run.length>1) {
             this.num_error++;
             this.errores.push(new Excepcion(this.num_error, "SEMANTICO", "Existe mas de una llamada RUN", -1, -1));
             return;
         }
-        for(let elemento of this.Listfunciones){
+        for(let elemento of this.FUNCIONES){
             if(typeof(elemento) !== typeof("")){
                 elemento.ejecutar(this, this.global);
             }
@@ -51,7 +46,7 @@ export default class ArbolAST {
         for(let elemento of this.instrucciones){
             if(typeof(elemento) !== typeof("")){
                 let valor = elemento;
-                if (valor.ID && !valor.Posicion_ && valor.CANTIDAD && valor.DIMENSION) {
+                if (valor.ID && !valor.Pos && valor.CANTIDAD && valor.DIMENSION) {
                     elemento.ejecutar(this, this.global);
                 }else{
                     this.num_error++;
@@ -59,28 +54,28 @@ export default class ArbolAST {
                 }
             }
         }
-        if (this.run_.length===1) {
-            this.run_[0].getValor(this, this.global);
+        if (this.run.length===1) {
+            this.run[0].getValor(this, this.global);
         }
     }
 
     public graphAST():void
     {
-        let name:string = "AST";
+        let name:string = "GraficaAST";
         let ext:string = "svg";
         var fs = require('fs');
-        var stream = fs.createWriteStream(`./src/reportes/${name}.dot`);
+        var stream = fs.createWriteStream(`./Reportes/${name}.dot`);
         stream.once('open',() =>{
             stream.write(this.getDot(this.raiz));
             stream.end();
 
         });
         const exec = require('child_process').exec;
-        exec(`dot -T svg -o ./src/reportes/${name}.${ext} ./src/reportes/${name}.dot`, (err:any, stdout:any)=>{
+        exec(`dot -T svg -o ./Reportes/${name}.${ext} ./Reportes/${name}.dot`, (err:any, stdout:any)=>{
             if (err) {
                 throw err;
             }
-            exec(`start ./src/reportes/${name}.${ext}`);
+            exec(`start ./Reportes/${name}.${ext}`);
         });
     }
     
@@ -90,18 +85,16 @@ export default class ArbolAST {
         let ext:string = "svg";
         try{
             let init:NodeAST = new NodeAST("RAIZ");
-            let instr:NodeAST  = new NodeAST("INSTRUCCIONES");
-
-
-            for(let elemento of this.Listfunciones){
+            let instr:NodeAST  = new NodeAST("Instrucciones");
+            for(let elemento of this.FUNCIONES){
                 if(typeof(elemento) !== typeof("")){
                     instr.agregarHijo(undefined, undefined, elemento.getNodo());
                 }
             }
-            if (this.run_.length===1) {
+            if (this.run.length===1) {
                 let nodo = new NodeAST("RUN");
                 nodo.agregarHijo("RUN");
-                nodo.agregarHijo(undefined, this.run_[0].getNodo().getHijos(), undefined);
+                nodo.agregarHijo(undefined, this.run[0].getNodo().getHijos(), undefined);
                 instr.agregarHijo(undefined, undefined, nodo);
             }
             let x = 0;
@@ -119,11 +112,11 @@ export default class ArbolAST {
     public getDot(raiz:NodeAST):string
     {
         this.grafo = "";
-        this.grafo += "digraph {\n";
+        this.grafo += "digraph G {\n";
         var re = /\"/gi; 
-        this.grafo += "n0[label=\"" + raiz.getValor().replace(re, "\\\"") + "\"];\n";
-        this.c = 1;
-        this.recorrerAST("n0",raiz);
+        this.grafo += "node_0[label=\"" + raiz.getValor().replace(re, "\\\"") + "\"];\n";
+        this.aux = 1;
+        this.recorrerAST("node_0",raiz);
         this.grafo += "}";
         return this.grafo;
     }
@@ -132,11 +125,11 @@ export default class ArbolAST {
     {
         for(let hijo of nPadre.getHijos())
         {
-            let nombreHijo:string = "n" + this.c;
+            let nombreHijo:string = "node_" + this.aux;
             var re = /\"/gi; 
             this.grafo += nombreHijo + "[label=\"" + hijo.getValor().replace(re, "\\\"") + "\"];\n";
             this.grafo += padre + "->" + nombreHijo + ";\n";
-            this.c++;
+            this.aux++;
             this.recorrerAST(nombreHijo,hijo);
         }
     }

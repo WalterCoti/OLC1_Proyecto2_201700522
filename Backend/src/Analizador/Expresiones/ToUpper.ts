@@ -33,7 +33,7 @@ export default class DECREMENTO extends Expresion {
         return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
     }
     getNodo():NodeAST{
-        let nodo = new NodeAST("TOUPPER");
+        let nodo = new NodeAST("ToUpper");
         nodo.agregarHijo("ToUpper");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());

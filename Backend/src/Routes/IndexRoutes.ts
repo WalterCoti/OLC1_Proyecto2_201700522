@@ -4,10 +4,10 @@ class IndexRoutes {
     public router: Router = Router();
 
     constructor() {
-        this.config();
+        this.api();
     }
 
-    public config(): void {
+    public api(): void {
         this.router.post("/compile", control.interpretar);
         this.router.post("/graficar", control.open);
     }

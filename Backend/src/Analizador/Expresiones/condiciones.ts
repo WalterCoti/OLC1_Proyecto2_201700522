@@ -695,11 +695,11 @@ export default class condicion extends Expresion {
                         switch(derecha?.Tipo.tipos){
                             case tipos.BOOLEANO:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Entero con un booleano", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Entero con un Booleano", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CADENA:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Entero con un string", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Entero con un String", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CARACTER:
                                 if (izquierda?.valor !== derecha?.valor.charCodeAt()) {
@@ -721,11 +721,11 @@ export default class condicion extends Expresion {
                         switch(derecha?.Tipo.tipos){
                             case tipos.BOOLEANO:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un char con un booleano", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Char con un Booleano", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CADENA:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un char con un string", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un CHar con un String", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CARACTER:
                                 if (izquierda?.valor.charCodeAt() !== derecha?.valor.charCodeAt()) {
@@ -771,11 +771,11 @@ export default class condicion extends Expresion {
                         switch(derecha?.Tipo.tipos){
                             case tipos.BOOLEANO:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Double con un booleano", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Double con un Booleano", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CADENA:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Double con un string", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Double con un String", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CARACTER:
                                 if (izquierda?.valor !== derecha?.valor.charCodeAt()) {
@@ -802,19 +802,19 @@ export default class condicion extends Expresion {
                                 return new Literal(this.linea, this.columna, false, tipos.BOOLEANO);
                             case tipos.CADENA:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un string", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un String", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.CARACTER:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un char", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un Char", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.ENTERO:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un int", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un Entero", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                             case tipos.DOBLE:
                                 arbol.num_error++;
-                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un Doble", this.linea, this.columna));
+                                arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "No se puede comparar un Booleano con un Double", this.linea, this.columna));
                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                         }
                     default:
@@ -837,7 +837,7 @@ export default class condicion extends Expresion {
                     }
                     return new Literal(this.linea, this.columna, false, tipos.BOOLEANO);
                 }
-                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Se esperaba tipo booleano",this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Se esperaba tipo Booleano",this.linea, this.columna));
             case "||":
                 if (izquierda?.Tipo.tipos===tipos.BOOLEANO && derecha?.Tipo.tipos===tipos.BOOLEANO) {
                     if (izquierda.valor || derecha.valor) {
@@ -845,13 +845,13 @@ export default class condicion extends Expresion {
                     }
                     return new Literal(this.linea, this.columna, false, tipos.BOOLEANO);
                 }
-                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Se esperaba tipo booleano",this.linea, this.columna));
+                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Se esperaba tipo Booleano",this.linea, this.columna));
         }
         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("CONDICION");
+        let nodo = new NodeAST("Condicion");
         if (this.Expderecho && this.Expizquierdo) {
             nodo.agregarHijo(undefined,undefined,this.Expizquierdo.getNodo());
             nodo.agregarHijo(this.operador);

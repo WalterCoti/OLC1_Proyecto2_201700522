@@ -15,7 +15,7 @@ export default class LLAMADA extends Instruccion {
         if (this.exp) {
             return this.exp.getValor(arbol, tabla);
         }
-        //ES UN ERROR
+
     }
     getNodo():NodeAST{
         let nodo:NodeAST = new NodeAST("");

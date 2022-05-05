@@ -4,7 +4,7 @@ import Excepcion from "../Exceptions/Excepcion";
 import DECLARAR from "./Declarar";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
-import lstSimbolo from "../AST/Lsimbolos";
+import ListaSimbolo from "../AST/Lsimbolos";
 import Tipo, { tipos } from "../AST/Stype";
 
 export default class FUNCIONF extends Instruccion {
@@ -44,9 +44,9 @@ export default class FUNCIONF extends Instruccion {
         if (comprobar.tipo.tipos===tipos.ERROR) {
             if (!this.reg) {
                 if (this.vector) {
-                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,nuevo_nombre, "METODO", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
+                    arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,nuevo_nombre, "METODO", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
                 }else{
-                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,nuevo_nombre, "FUNCION", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
+                    arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,nuevo_nombre, "FUNCION", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
                 }
                 this.reg = true;
             }
@@ -57,16 +57,15 @@ export default class FUNCIONF extends Instruccion {
                         let valor = sim;
 
                         if (valor.CANTIDAD!==-1) {
-
-                            arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,valor.ID, "lst", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
+                            arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,valor.ID, "lst", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
                         }else if(valor.DIMENSION!==-1){
 
-                            arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,valor.ID, "VECTOR", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
+                            arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,valor.ID, "VECTOR", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
                         }else{
                             if (valor.valor instanceof FUNCIONF) {
-                                arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,valor.ID, "FUNCION", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
+                                arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,valor.ID, "FUNCION", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
                             }
-                            arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,valor.ID, "VARIABLE", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
+                            arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length,valor.ID, "VARIABLE", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre)); 
                         }
 
                     }
@@ -76,20 +75,20 @@ export default class FUNCIONF extends Instruccion {
                     for(let element of this.INSTRUCCION){
                         if (typeof (element) !== typeof ("")) {
                             let valor = element;
-                            if (valor.ID && !valor.Posicion_ && valor.CANTIDAD && valor.DIMENSION) {
+                            if (valor.ID && !valor.Pos && valor.CANTIDAD && valor.DIMENSION) {
                                 if (valor.ID==="caracteres") {
                                 }
                                 if (valor.CANTIDAD !== -1) {
-                                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length, valor.ID, "lst", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
+                                    arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length, valor.ID, "lst", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
                                 }
                                 else if (valor.DIMENSION !== -1) {
-                                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length, valor.ID, "VECTOR", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
+                                    arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length, valor.ID, "VECTOR", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
                                 }
                                 else if (element.ID) {
                                     if (valor.exp instanceof FUNCIONF) {
-                                        arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length, valor.ID, "FUNCION", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
+                                        arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length, valor.ID, "FUNCION", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
                                     }
-                                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length, valor.ID, "VARIABLE", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
+                                    arbol.lst_simbolos.push(new ListaSimbolo(arbol.lst_simbolos.length, valor.ID, "VARIABLE", valor.tipo.getTipo(), valor.linea, valor.columna, Nuevo_Entorno.nombre));
                                 }
                             }
                         }
@@ -101,7 +100,7 @@ export default class FUNCIONF extends Instruccion {
             return;
         }
         arbol.num_error++;
-        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Ya existe una función con este nombre", this.linea, this.columna));
+        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO", "Ya existe una función con el mismo identificador", this.linea, this.columna));
         return;
         // ERROR
     }
@@ -110,7 +109,6 @@ export default class FUNCIONF extends Instruccion {
         let nodo2 = new NodeAST("PARAMETROS");
         let nodo3 = new NodeAST("INSTRUCCIONES");
         if (this.vector) {
-            nodo.agregarHijo("VOID");
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("(");
             if (this.PARAMETRO) {
@@ -122,6 +120,8 @@ export default class FUNCIONF extends Instruccion {
                 }
             }
             nodo.agregarHijo(")");
+            nodo.agregarHijo(":");
+            nodo.agregarHijo("VOID");
             nodo.agregarHijo("{");
             
             for(let element of this.INSTRUCCION){
@@ -130,7 +130,7 @@ export default class FUNCIONF extends Instruccion {
             nodo.agregarHijo(undefined, undefined, nodo3);
             nodo.agregarHijo("}");
         }else{
-            nodo.agregarHijo(undefined, undefined,this.tipo.getNodo());
+            
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("(");
             if (this.PARAMETRO.length>0) {
@@ -140,6 +140,8 @@ export default class FUNCIONF extends Instruccion {
                 nodo.agregarHijo(undefined, undefined, nodo2);
             }
             nodo.agregarHijo(")");
+            nodo.agregarHijo(":");
+            nodo.agregarHijo(undefined, undefined,this.tipo.getNodo());
             nodo.agregarHijo("{");
             for(let element of this.INSTRUCCION){
                 nodo3.agregarHijo(undefined, undefined, element.getNodo());

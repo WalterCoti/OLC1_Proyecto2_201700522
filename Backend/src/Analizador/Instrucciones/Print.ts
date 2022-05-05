@@ -24,18 +24,14 @@ export default class Print extends Instruccion {
                         return;
                     }
                     this.ast = true;
-                    if (arbol.consola==="") {
-                        arbol.consola+=result.valor;
-                    }else{
-                        arbol.consola+="\n"+result.valor;
-                    }
+                    arbol.consola+=result.valor;
                 }
             }
         }
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("PRINT");
+        let nodo:NodeAST = new NodeAST("Print");
         nodo.agregarHijo("print");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined,undefined,this.exp.getNodo());

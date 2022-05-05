@@ -53,7 +53,7 @@ export default class TERNARIO extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("TERNARIO");
+        let nodo = new NodeAST("Ternario");
         nodo.agregarHijo(undefined, undefined, this.condicion.getNodo());
         nodo.agregarHijo("?");
         nodo.agregarHijo(undefined, undefined,this.exp1.getNodo());

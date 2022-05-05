@@ -4,6 +4,7 @@ import SaveAltRoundedIcon from "@material-ui/icons/SaveAltRounded";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 import OpenInBrowserRoundedIcon from "@material-ui/icons/OpenInBrowserRounded";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 import { makeStyles } from "@material-ui/core/styles";
 import Editor from "@monaco-editor/react";
 import React, { useRef,useState } from "react";
@@ -76,7 +77,26 @@ function App() {
     
   }
 
+  const graficar = () =>{
+    const editocontent = editorRef.current.getValue()
+    const data ={
+      "input" : editocontent
+    }
 
+    fetch('http://localhost:3500/graficar',{
+      method: 'POST',
+      headers:{"Content-Type" : "application/json"},
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data =>{
+        var datares = JSON.stringify(data);
+        var consoleres = JSON.parse(datares).consola
+        setValorconsola(consoleres);
+        console.log('response: ', data);
+      });
+    
+  }
 
   return (
     <header className="App-header">
@@ -127,7 +147,7 @@ function App() {
             className="texteditor"
             height="400px"
             theme="vs-dark"
-            defaultLanguage="typescript"
+            defaultLanguage=""
             value = {valueEditor}
             onMount={handleEditorDidMount}
           />
@@ -149,6 +169,13 @@ function App() {
         startIcon={<PlayArrowIcon />}
         onClick ={compilar}
       >Ejecutar</Button>
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        startIcon={<AccountTreeIcon />}
+        onClick ={graficar}
+      >Grafica AST</Button>
     </header>
   );
 }

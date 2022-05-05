@@ -24,19 +24,15 @@ export default class Println extends Instruccion {
                         return;
                     }
                     this.ast = true;
-                    if (arbol.consola==="") {
-                        arbol.consola+=result.valor;
-                    }else{
                         arbol.consola+="\n"+result.valor;
-                    }
                 }
             }
         }
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("PRINT");
-        nodo.agregarHijo("println");
+        let nodo:NodeAST = new NodeAST("PrintLn");
+        nodo.agregarHijo("PrintLn");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined,undefined,this.exp.getNodo());
         nodo.agregarHijo(")");

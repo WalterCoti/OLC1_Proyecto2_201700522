@@ -22,7 +22,7 @@ export default class VARIABLE extends Expresion {
     }
     
     getNodo():NodeAST{
-        let nodo = new NodeAST("VARIABLE");
+        let nodo = new NodeAST("Variable");
         nodo.agregarHijo(this.nombre);
         return nodo;
     }

@@ -22,10 +22,6 @@ export default class VECTOR extends Expresion {
                 arbol.num_error++;
                 arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de vector erronea",this.linea, this.columna));
                 return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
-            }else if(this.tip==="LIST" && expre.CANTIDAD===-1){
-                arbol.num_error++;
-                arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","Llamada de lst erronea",this.linea, this.columna));
-                return new Literal(this.linea, this.columna, "ERROR", tipos.ERROR);
             }
             const pos = this.posicion.getValor(arbol, tabla);
             if ((pos.valor < expre.DIMENSION && pos.valor>=0) || (pos.valor<expre.CANTIDAD && pos.valor>=0)) {
@@ -49,7 +45,7 @@ export default class VECTOR extends Expresion {
     }
     getNodo():NodeAST{
         let nodo = new NodeAST("");
-            nodo = new NodeAST("VECTOR");
+            nodo = new NodeAST("Vector");
             nodo.agregarHijo(this.nombre);
             nodo.agregarHijo("[");
             nodo.agregarHijo(undefined, undefined, this.posicion.getNodo());

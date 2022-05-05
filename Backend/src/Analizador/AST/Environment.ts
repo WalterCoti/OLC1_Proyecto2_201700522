@@ -44,7 +44,6 @@ export default class Entorno
                 }
             }
         }
-        //Error
         return false;
     }
 

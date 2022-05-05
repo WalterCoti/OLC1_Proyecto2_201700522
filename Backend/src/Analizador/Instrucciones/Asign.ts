@@ -11,7 +11,7 @@ import Literal from "../Expresiones/Literal";
 export default class ASIGNAR extends Instruccion {
     public exp: Expresion | undefined;
     public ID:string;
-    public Posicion_: any;
+    public Pos: any;
     public tip:string;
     public ubic: Literal|any;
     constructor(linea:number, columna:number, ID:string,Posicion_?:any, exp?:Expresion, tipv:string=""){
@@ -19,9 +19,9 @@ export default class ASIGNAR extends Instruccion {
         this.exp = exp;
         this.ID=ID;
         if (Posicion_) {
-            this.Posicion_ = Posicion_;
+            this.Pos = Posicion_;
         }else{
-            this.Posicion_ = -1;
+            this.Pos = -1;
         }
         this.tip = tipv;
     }
@@ -31,8 +31,8 @@ export default class ASIGNAR extends Instruccion {
     ejecutar(arbol: ArbolAST, tabla: Entorno) {
         const expre = tabla.get(this.ID);
         let ubic = -1;
-        if(this.Posicion_!=-1){
-            ubic = this.Posicion_.getValor(arbol, tabla);
+        if(this.Pos!=-1){
+            ubic = this.Pos.getValor(arbol, tabla);
         }
         if(expre.tipo.tipos!== tipos.ERROR){
             let value = this.exp?.getValor(arbol, tabla);
@@ -65,25 +65,15 @@ export default class ASIGNAR extends Instruccion {
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("ASIGNAR");
-        if (this.Posicion_!==-1) {
-            if (this.tip==="LIST") {
-                nodo.agregarHijo(this.ID);
-                nodo.agregarHijo("[");
-                nodo.agregarHijo("[");
-                nodo.agregarHijo(this.ubic.getNodo());
-                nodo.agregarHijo("]");
-                nodo.agregarHijo("]");
-                nodo.agregarHijo("=");
-                nodo.agregarHijo(undefined, undefined, this.exp?.getNodo());
-            }else{
-                nodo.agregarHijo(this.ID);
-                nodo.agregarHijo("[");
-                nodo.agregarHijo(this.ubic.getNodo());
-                nodo.agregarHijo("]");
-                nodo.agregarHijo("=");
-                nodo.agregarHijo(undefined, undefined, this.exp?.getNodo());
-            }
+        let nodo:NodeAST = new NodeAST("Asignar");
+        if (this.Pos!==-1) {
+            nodo.agregarHijo(this.ID);
+            nodo.agregarHijo("[");
+            nodo.agregarHijo(this.ubic.getNodo());
+            nodo.agregarHijo("]");
+            nodo.agregarHijo("=");
+            nodo.agregarHijo(undefined, undefined, this.exp?.getNodo());
+            
         }else{
             nodo.agregarHijo(this.ID);
             nodo.agregarHijo("=")

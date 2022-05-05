@@ -69,7 +69,7 @@ export default class FUNCION extends Expresion {
                                             let rest = retorno.getValor(arbol, Nuevo_Entorno);
                                             if(rest.Tipo.tipos===tipos.ERROR){
                                                 arbol.num_error++;
-                                                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTIO", "Error en valor de retorno",this.linea, this.columna));
+                                                arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTICO", "Error en retorno",this.linea, this.columna));
                                                 return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                                             }
                                             rest.nombre = "FUNCION";
@@ -77,7 +77,7 @@ export default class FUNCION extends Expresion {
                                             return rest;
                                     }else{
                                         arbol.num_error++;
-                                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTIO", "El tipo del retorno no coincide con el de la función",this.linea, this.columna));
+                                        arbol.errores.push(new Excepcion(arbol.num_error, "SINTACTIO", "El tipo del retorno no es el correcto",this.linea, this.columna));
                                         return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
                                     }
                                 }
@@ -118,11 +118,11 @@ export default class FUNCION extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("LLAMADA");
+        let nodo = new NodeAST("Llamada");
         nodo.agregarHijo(this.nombre);
         nodo.agregarHijo("(");
         if (this.parametros) {
-            let nodo2 = new NodeAST("PARAMETROS");
+            let nodo2 = new NodeAST("Parametros");
             for(let element of this.parametros){
                 if (typeof(this.parametros)!==typeof("")) {
                     nodo2.agregarHijo(undefined, undefined, element.getNodo());

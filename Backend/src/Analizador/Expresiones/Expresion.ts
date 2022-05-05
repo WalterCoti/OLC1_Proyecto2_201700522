@@ -24,5 +24,5 @@ export abstract class Expresion extends node {
 
     abstract getValor(arbol: ArbolAST, tabla: Entorno):any;
     public abstract getNodo():NodeAST;
-    // TODO graficar AST
+   
 }

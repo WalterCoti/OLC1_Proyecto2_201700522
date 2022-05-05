@@ -22,8 +22,6 @@ export default class Tipo
             return "CARACTER";
         }else if(this.tipos === tipos.DOBLE){
             return "DOUBLE";
-        }else if(this.tipos === tipos.VOID){
-            return "DOUBLE";
         }
         return "";
     }
@@ -42,7 +40,5 @@ export enum tipos
     CARACTER = "CARACTER",
     BOOLEANO = "BOOLEANO",
     CADENA = "CADENA",
-    ERROR = "ERROR",
-    VOID = ""
-    
+    ERROR = "ERROR"   
 }

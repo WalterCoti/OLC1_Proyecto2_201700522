@@ -20,7 +20,7 @@ export default class identificador extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("IDENTIFICADOR");
+        let nodo:NodeAST = new NodeAST("Identificador");
         return nodo;
     }
 

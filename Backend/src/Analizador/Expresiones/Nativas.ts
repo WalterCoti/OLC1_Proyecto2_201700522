@@ -5,7 +5,6 @@ import Entorno from "../AST/Environment";
 import Tipo, { tipos } from "../AST/Stype";
 import { Expresion } from "./Expresion";
 import Literal from "./Literal";
-import Simbolo from "../AST/simbolo";
 import VARIABLE from "./Variables";
 
 export default class NATIVA extends Expresion {
@@ -42,39 +41,14 @@ export default class NATIVA extends Expresion {
                 case "TYPEOF":
                     switch(valor.Tipo.tipos){
                         case tipos.ENTERO:
-                            if (comp instanceof Simbolo) {
-                                if (comp.Ltmp==="VECTOR") {
-                                    return new Literal(this.linea, this.columna, "INT[]", tipos.CADENA);
-                                }
-                            }
                             return new Literal(this.linea, this.columna, "INT", tipos.CADENA);
                         case tipos.BOOLEANO:
-                            if (comp instanceof Simbolo) {
-                                if (comp.Ltmp==="VECTOR") {
-                                    return new Literal(this.linea, this.columna, "BOOLEAN[]", tipos.CADENA);
-                                }
-                            }
                             return new Literal(this.linea, this.columna, "BOOLEAN", tipos.CADENA);
                         case tipos.CARACTER:
-                            if (comp instanceof Simbolo) {
-                                if (comp.Ltmp==="VECTOR") {
-                                    return new Literal(this.linea, this.columna, "CHAR[]", tipos.CADENA);
-                                }
-                            }
                             return new Literal(this.linea, this.columna, "CHAR", tipos.CADENA);
                         case tipos.DOBLE:
-                            if (comp instanceof Simbolo) {
-                                if (comp.Ltmp==="VECTOR") {
-                                    return new Literal(this.linea, this.columna, "DOUBLE[]", tipos.CADENA);
-                                }
-                            }
                             return new Literal(this.linea, this.columna, "DOUBLE", tipos.CADENA);
                         case tipos.CADENA:
-                            if (comp instanceof Simbolo) {
-                                if (comp.Ltmp==="VECTOR") {
-                                    return new Literal(this.linea, this.columna, "STRING[]", tipos.CADENA);
-                                }
-                            }
                             return new Literal(this.linea, this.columna, "STRING", tipos.CADENA);
                         default:
                             return new Literal(this.linea, this.columna, "error", tipos.ERROR);
@@ -88,13 +62,6 @@ export default class NATIVA extends Expresion {
                         }
                     }
                     return new Literal(this.linea, this.columna, String(valor.valor), tipos.CADENA);
-                case "TOCHARARRAY":
-                    if (typeof(valor.valor)!== typeof("")) {
-                        arbol.num_error++;
-                        arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","El valor ingresado no es de tipo string",this.linea, this.columna));
-                        return new Literal(this.linea, this.columna, undefined, tipos.ERROR);
-                    }
-                    return new Literal(this.linea, this.columna, Array.from(valor.valor), tipos.CARACTER);
                 default:
                     arbol.num_error++;
                     arbol.errores.push(new Excepcion(arbol.num_error, "SEMANTICO","función inexistente",this.linea, this.columna));
@@ -108,7 +75,7 @@ export default class NATIVA extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("NATIVA");
+        let nodo = new NodeAST("Nativa");
         nodo.agregarHijo(this.nombre.toUpperCase());
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());

@@ -25,9 +25,6 @@ export default class Literal extends Expresion {
                 case tipos.DOBLE:
                     valor = Number(parseFloat(valor));
                     break;
-                case tipos.VOID:
-                    valor = "";
-                    break;
                 default:
                     valor = valor;
             }

@@ -5,7 +5,7 @@ import { Expresion } from "../Expresiones/Expresion";
 import Literal from "../Expresiones/Literal";
 import ArbolAST from "../AST/ASTTree";
 import Entorno from "../AST/Environment";
-import lstSimbolo from "../AST/Lsimbolos";
+import ListaSimbolos from "../AST/Lsimbolos";
 import Tipo, { tipos } from "../AST/Stype";
 
 export default class DECLARAR extends Instruccion {
@@ -121,9 +121,9 @@ export default class DECLARAR extends Instruccion {
             }
             if (tabla.nombre.toUpperCase()==="GLOBAL") {
                 if (v1!==-1) {
-                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,this.ID, "VECTOR", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));              
+                    arbol.lst_simbolos.push(new ListaSimbolos(arbol.lst_simbolos.length,this.ID, "VECTOR", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));              
                 }else{
-                    arbol.lst_simbolos.push(new lstSimbolo(arbol.lst_simbolos.length,this.ID, "VARIABLE", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
+                    arbol.lst_simbolos.push(new ListaSimbolos(arbol.lst_simbolos.length,this.ID, "VARIABLE", this.tipo.getTipo(), this.linea, this.columna, tabla.nombre));        
                 }
             }
             this.ast = true;
@@ -139,7 +139,7 @@ export default class DECLARAR extends Instruccion {
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("DECLARAR");
+        let nodo:NodeAST = new NodeAST("Declarar");
         if (typeof(this.DIMENSION)!==typeof(-1) && this.exp instanceof Array) {
             nodo.agregarHijo(undefined, undefined,this.tipo.getNodo())
             nodo.agregarHijo("[");
@@ -147,7 +147,7 @@ export default class DECLARAR extends Instruccion {
             nodo.agregarHijo(this.ID);
             nodo.agregarHijo("=");
             nodo.agregarHijo("{");
-            let nodo2 = new NodeAST("EXPRESIONES")
+            let nodo2 = new NodeAST("Expresiones")
             for(let element of this.exp){
                 nodo2.agregarHijo(undefined, undefined,element.getNodo());
             }
@@ -178,7 +178,7 @@ export default class DECLARAR extends Instruccion {
             }else{
                 nodo.agregarHijo(this.tipo.getTipo());
                 nodo.agregarHijo(this.ID);
-                nodo.agregarHijo(";");
+               
             }
         }
         return nodo;

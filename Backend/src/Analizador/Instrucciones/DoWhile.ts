@@ -114,10 +114,10 @@ export default class DOWHILE extends Instruccion {
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("DO-WHILE");
+        let nodo:NodeAST = new NodeAST("Do-While");
         nodo.agregarHijo("DO");
         nodo.agregarHijo("{");
-        let nodo2:NodeAST = new NodeAST("INSTRUCCIONES");
+        let nodo2:NodeAST = new NodeAST("Instrucciones");
         for(let element of this.bloque1){
             if(typeof(element) !== typeof("")){
                 nodo2.agregarHijo(undefined, undefined, element.getNodo());
@@ -125,7 +125,7 @@ export default class DOWHILE extends Instruccion {
         }
         nodo.agregarHijo(undefined, undefined, nodo2);
         nodo.agregarHijo("}");
-        nodo.agregarHijo("WHILE");
+        nodo.agregarHijo("While");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.condicion1.getNodo());
         nodo.agregarHijo(")");

@@ -34,7 +34,7 @@ export default class TOLOWER extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("TOLOWER");
+        let nodo = new NodeAST("ToLower");
         nodo.agregarHijo("ToLower");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());

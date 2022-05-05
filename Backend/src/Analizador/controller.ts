@@ -5,24 +5,22 @@ import Entorno from './AST/Environment';
 
 class Control {
     
-    public index( res: Response) {
+    public async index( res: Response) {
         res.json();
     }
 
     public interpretar(req: Request, res: Response) {
         const {input} = req.body;
-        let ast = new ArbolAST([]);
         try {
             
-            const parsergen = require("./analizador");
+            let parsergen = require("./analizador");
             let ast = new ArbolAST([]); 
             try{
-                //ast = new parsergen(input);
                 ast = parsergen.parse(input);
                 if (typeof(ast)==typeof(true)) {
                     ast = new ArbolAST([]);
                     ast.num_error++;
-                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error sintactico",0,0));
+                    ast.errores.push(new Excepcion(ast.num_error, "SINTACTICO","Error sintactico",-1,-1));
                 }
             }catch(e){
                 ast.num_error++;
@@ -51,10 +49,10 @@ class Control {
 
     public open(req: Request, res: Response){
         try{
-            const Contenido = req.body.Contenido;
+            const {input} = req.body;
             let parse = require("./analizador");
             let ast = new ArbolAST([]);
-            ast = parse.parse(Contenido);
+            ast = parse.parse(input);
             ast.openFile();
         }catch{}
     }

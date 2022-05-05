@@ -54,7 +54,7 @@ export default class DECREMENTO extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo = new NodeAST("DECREMENTO");
+        let nodo = new NodeAST("Decremento");
         nodo.agregarHijo(undefined, undefined, this.exp.getNodo());
         nodo.agregarHijo("--");
         return nodo;

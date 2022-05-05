@@ -91,7 +91,7 @@ export default class SWITCH extends Instruccion {
                                     return res;
                                 }else{
                                     arbol.num_error++;
-                                    arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","NO SE PUEDE RETORNAR FUERA DE UNA FUNCION", this.linea, this.columna));
+                                    arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","No se puede retornar fuera de una funcion", this.linea, this.columna));
                                 } 
                             }else if(res.nombre==="BREAK"){
                                 if(arbol.pilaCiclo.length>0){
@@ -99,7 +99,7 @@ export default class SWITCH extends Instruccion {
                                     return;
                                 }else{
                                     arbol.num_error++;
-                                    arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","NO SE PUEDE UTILIZAR BREAK FUERA DE UN CICLO", this.linea, this.columna));
+                                    arbol.errores.push(new Excepcion(arbol.num_error,"SEMANTICO","No se puede usar Beak", this.linea, this.columna));
                                 }
                             }else if(res.nombre==="CONTINUE"){
                                 if(arbol.pilaCiclo.length>1){
@@ -124,8 +124,8 @@ export default class SWITCH extends Instruccion {
         return;
     }
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("SWITCH");
-        nodo.agregarHijo("SWITCH");
+        let nodo:NodeAST = new NodeAST("Switch");
+        nodo.agregarHijo("Switch");
         nodo.agregarHijo("(");
         nodo.agregarHijo(undefined, undefined, this.Variable.getNodo());
         nodo.agregarHijo(")");
@@ -136,11 +136,11 @@ export default class SWITCH extends Instruccion {
         if (this.Case) {
             for(let caso of this.Case){
                 if (typeof(caso)!==typeof("")) {
-                    cas.agregarHijo("CASE");
+                    cas.agregarHijo("Case");
                     cas.agregarHijo(undefined, undefined, caso.Case.getNodo());
                     cas.agregarHijo(":")
                     if (caso.INS) {
-                        let inst = new NodeAST("INSTRUCCIONES");
+                        let inst = new NodeAST("Instrucciones");
                         for(let instruccion of caso.INS){
                             if (typeof(instruccion)!==typeof("")) {
                                 inst.agregarHijo(undefined, undefined, instruccion.getNodo());
@@ -158,14 +158,14 @@ export default class SWITCH extends Instruccion {
             }
         }
         if (this.Default) {
-            let def = new NodeAST("DEFAULT");
+            let def = new NodeAST("Default");
             for(let elemento of this.Default){
                 if(typeof(elemento) !== typeof("")){
                     def.agregarHijo(undefined, undefined, elemento.getNodo());
                 }
             }
             if (x==0) {
-                cas = new NodeAST("DEFAULT");
+                cas = new NodeAST("Default");
             }else{
                 cas.agregarHijo(undefined,undefined,def);
             }

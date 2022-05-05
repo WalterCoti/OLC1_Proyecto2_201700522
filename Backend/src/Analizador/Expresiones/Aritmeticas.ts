@@ -670,7 +670,7 @@ export default class Aritmetica extends Expresion {
     }
 
     getNodo():NodeAST{
-        let nodo:NodeAST  = new NodeAST("ARITMETICA");
+        let nodo:NodeAST  = new NodeAST("Aritmeticas");
         if(!this.Expderecho && this.Expizquierdo)
         {
             nodo.agregarHijo(this.operador + "");

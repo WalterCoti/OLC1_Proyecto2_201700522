@@ -27,8 +27,8 @@ export default class RETURN extends Instruccion {
         return {nombre:"RETURN", retorno:undefined};
     }
     getNodo():NodeAST{
-        let nodo:NodeAST = new NodeAST("RETURN");
-        nodo.agregarHijo("RETURN");
+        let nodo:NodeAST = new NodeAST("Return");
+        nodo.agregarHijo("Return");
         if (this.exp) {
             nodo.agregarHijo(undefined, undefined, this.exp.getNodo());
         }
